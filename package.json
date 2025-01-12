@@ -7,10 +7,14 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.248",
+    "@remotion/media-utils": "^4.0.248",
+    "@remotion/transitions": "^4.0.248",
     "@remotion/zod-types": "4.0.248",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "remotion": "4.0.248",
+    "remotion-animated": "^2.1.1",
+    "remotion-time": "^0.0.3",
     "zod": "3.22.3"
   },
   "devDependencies": {
