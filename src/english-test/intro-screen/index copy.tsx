@@ -1,11 +1,48 @@
-import { AbsoluteFill, Audio, Img, Sequence, staticFile } from "remotion";
+import {
+  AbsoluteFill,
+  Audio,
+  Easing,
+  Img,
+  interpolate,
+  Sequence,
+  staticFile,
+  useCurrentFrame,
+} from "remotion";
 import { useTime } from "remotion-time";
 import { Animated, Fade, Move, Scale } from "remotion-animated";
+import { useRef } from "react";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
-import { BgVideo } from "./bg-videos/bg-video";
-
-export const EnglishTest = () => {
+export const IntroScreen = () => {
+  const frame = useCurrentFrame();
   const t = useTime();
+
+  const tl = useRef<gsap.core.Timeline>(null);
+  useGSAP(() => {
+    tl.current = gsap
+      .timeline()
+      .to(".box", {
+        rotate: 360
+      })
+      .to(".box", {
+        x: 200,
+      })
+  });
+
+  tl.current?.time(frame / 60);
+
+  const ROOT_ITEM_OPACITY_IN = interpolate(frame, [0, t`2s`], [0, 1], {
+    easing: Easing.bezier(0.12, 1.03, 0.74, 1),
+    extrapolateRight: "clamp",
+    extrapolateLeft: "clamp",
+  });
+
+  const ROOT_ITEM_OPACITY_OUT = interpolate(frame, [t`4.5s`, t`5s`], [1, 0], {
+    easing: Easing.bezier(0.12, 1.03, 0.74, 1),
+    extrapolateRight: "clamp",
+    extrapolateLeft: "clamp",
+  });
 
   return (
     <>
@@ -15,12 +52,8 @@ export const EnglishTest = () => {
       </Sequence>
 
       <AbsoluteFill>
-        <AbsoluteFill>
-          <BgVideo />
-          <AbsoluteFill style={{ background: "rgba(0,0,0,0.2)" }} />
-        </AbsoluteFill>
-
-        <AbsoluteFill>
+        {/* <Animated animations={[Fade({ to: 0, start: t`4.5s` })]}> */}
+        <AbsoluteFill style={{ opacity: 0 }}>
           <div
             style={{
               position: "absolute",
@@ -34,7 +67,6 @@ export const EnglishTest = () => {
               animations={[
                 Fade({ to: 1, initial: 0, duration: t`1s` }),
                 Scale({ by: 1, initial: 3 }),
-                // Move({ y: -50, start: t`2s` }),
               ]}
             >
               <div
@@ -52,19 +84,6 @@ export const EnglishTest = () => {
                 <br />
                 английского
               </div>
-
-              {/* <div
-                style={{
-                  position: "absolute",
-                  fontSize: 120,
-                  transform: "",
-                  left: "50%",
-                  bottom: "100%",
-                  transform: "translateX(-50%)",
-                }}
-              >
-                🇺🇸
-              </div> */}
 
               <div
                 style={{
@@ -127,69 +146,20 @@ export const EnglishTest = () => {
             </Animated>
           </div>
         </AbsoluteFill>
-
-        <Animated
-          in={1000}
-          animations={[
-            Fade({ to: 1, initial: 0, duration: t`1s` }),
-            Scale({ by: 1, initial: 3 }),
-          ]}
-        >
-          <div
-            style={{
-              fontFamily: "Arial",
-              fontSize: 64,
-              textTransform: "uppercase",
-              textAlign: "center",
-              background: "rgba(255, 255, 255, 0.8)",
-              padding: 20,
-            }}
-          >
-            проверь свое знание
-            <br />
-            английского
-          </div>
-        </Animated>
-
-        {/* <Img
+        {/* DEBUG */}
+        <AbsoluteFill style={{ background: "lightblue" }} />
+        <div
+          className="box"
           style={{
             position: "absolute",
-            top: 0,
-            left: 0,
-            // right: 0,
-            // bottom: 0,
-            objectFit: "cover",
-            width: "100%",
-            height: "100%",
+            width: 200,
+            height: 200,
+            bottom: 0,
+            background: "red",
           }}
-          src={staticFile("img.jpg")}
-        /> */}
-        {/* The current frame is {frame}.<span>132</span> */}
-        {/* <div style={{ width: 50, height: 50, background: "black" }}/> */}
-        {/* <span style={{ opacity }}>123</span> */}
-        {/* <div
-          style={{
-            width: "50%",
-            height: 50,
-            position: "relative",
-            border: "1px solid black",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              bottom: 0,
-              background: "red",
-              width: `${opacity * 100}%`,
-            }}
-          />
-        </div> */}
-        <div style={{ fontSize: 400 }}>🇺🇸🇺🇦</div>
+        ></div>
+        {/* </Animated> */}
       </AbsoluteFill>
     </>
   );
-
-  // return <AbsoluteFill style={{background: "red", opacity: (frame * 100/60)  / 100}}>123</AbsoluteFill>
 };
