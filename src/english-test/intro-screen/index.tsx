@@ -21,33 +21,28 @@ export const IntroScreen = () => {
   const flagRef = useRef<HTMLDivElement>(null);
 
   const tl = useRef<gsap.core.Timeline>(null);
+
   useGSAP(() => {
     tl.current = gsap
       .timeline()
-      .fromTo(
-        titleRef.current,
-        {
-          opacity: 0,
-          scale: 3,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          ease: "power4.out",
-          duration: 1,
-        },
-      )
+      .pause()
+      .to(titleRef.current, { opacity: 0, scale: 3, duration: 0 })
+      .to(titleRef.current, {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: "power4.out",
+      })
       .from(subtitleRef.current, { opacity: 0, y: -20, delay: 1.5 })
       .from(flagRef.current, { opacity: 0, y: 20 }, "<")
-      .to(containerRef.current, { opacity: 0, duration: 1, delay: 1});
+      .to(containerRef.current, { opacity: 0, duration: 1, delay: 1 });
   });
 
   tl.current?.time(frame / 30);
-  tl.current?.pause();
 
   return (
     <>
-      <Audio src={staticFile("check.mp3")} />
+      <Audio src={staticFile("check.mp3")} volume={.8} />
       <Sequence from={t`2.5s`}>
         <Audio src={staticFile("lvlc2.mp3")} />
       </Sequence>
@@ -61,6 +56,7 @@ export const IntroScreen = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "max-content",
+            opacity: 0,
           }}
         >
           <div

@@ -25,7 +25,7 @@ const T = () => (
 );
 
 export const RemotionRoot = () => {
-  const config = useTimeConfig("1m @ 30fps");
+  const config = useTimeConfig("41s @ 30fps");
 
   return (
     <>

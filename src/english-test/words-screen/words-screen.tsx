@@ -45,7 +45,7 @@ export const WordsScreen = () => {
   const wordDuration = t`7s`;
   const currentWord = (() => {
     const index = Math.floor((frame - t`.5s`) / wordDuration);
-    
+
     if (index === -1) {
       return words[0];
     }
@@ -65,8 +65,10 @@ export const WordsScreen = () => {
 
   const tl = useRef<gsap.core.Timeline>(null);
   useGSAP(() => {
-    tl.current = gsap.timeline();
-    tl.current!.fromTo(containerRef.current, { opacity: 0 }, { opacity: 1 });
+    tl.current = gsap
+      .timeline()
+      .pause()
+      .fromTo(containerRef.current, { opacity: 0 }, { opacity: 1 });
 
     words.forEach(() => {
       tl.current!.to(countdownInnerRef.current, {
