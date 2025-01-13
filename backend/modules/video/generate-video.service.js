@@ -17,9 +17,11 @@ const generateVideoService = {
       return;
     }
 
-    const words = await wordsForVideoService.generateWords({
-      englishLevel: "A1",
+    const words = await wordsForVideoService.generate({
+      englishLevel: "C2",
     });
+
+    console.log("Generated words:", JSON.stringify(words, null, 2));
   },
 };
 
