@@ -1,40 +1,25 @@
 import { Composition } from "remotion";
 import { EnglishTest } from "./english-test";
-import { useTimeConfig } from "remotion-time";
-import {
-  linearTiming,
-  springTiming,
-  TransitionSeries,
-} from "@remotion/transitions";
-import { fade } from "@remotion/transitions/fade";
-import { slide } from "@remotion/transitions/slide";
-
-const T = () => (
-  <TransitionSeries>
-    <TransitionSeries.Sequence durationInFrames={200}>
-      <EnglishTest />
-    </TransitionSeries.Sequence>
-    <TransitionSeries.Transition
-      timing={linearTiming({ durationInFrames: 30 })}
-      presentation={slide()}
-    />
-    <TransitionSeries.Sequence durationInFrames={60}>
-      <EnglishTest />
-    </TransitionSeries.Sequence>
-  </TransitionSeries>
-);
+import { useInputProps } from "./english-test/hooks/use-input-props";
+import { useConfig } from "./english-test/config/use-config";
 
 export const RemotionRoot = () => {
-  const config = useTimeConfig("41s @ 30fps");
+  const { fps, duration } = useConfig();
+
+  console.log("duration.introScreen", duration.introScreen);
+  console.log("duration.wordsScreen", duration.wordsScreen);
+  console.log("duration.total", duration.total);
+  console.log("duration.total + 10 * fps", duration.total + 10 * fps);
 
   return (
     <>
       <Composition
-        {...config}
         id="english-test"
         component={EnglishTest}
         width={1080}
         height={1920}
+        fps={fps}
+        durationInFrames={duration.total * fps}
       />
     </>
   );

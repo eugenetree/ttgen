@@ -26,12 +26,33 @@ const videoRepository = {
     return await readVideosJson();
   },
 
+  // data: {
+  //   words: { en: string, ru: string, path: string, duration: string }[];
+  //   englishLevel: string;
+  //   status: "READY_FOR_RENDER" | "RENDER_IN_PROGRESS" | "READY_FOR_UPLOAD" | "UPLOADED";
+  //   outputPath: string;
+  // }
   create: async (data) => {
     const videos = await readVideosJson();
+
     const newVideo = { id: videos.length + 1, ...data };
     videos.push(newVideo);
+
     await writeVideosJson(videos);
     return newVideo;
+  },
+
+  update: async (id, data) => {
+    const videos = await readVideosJson();
+    const currentVideo = videos.find((video) => video.id === id);
+
+    const updatedVideo = { ...currentVideo, ...data };
+    const updatedVideos = videos.map((video) =>
+      video.id === id ? updatedVideo : video,
+    );
+
+    await writeVideosJson(updatedVideos);
+    return updatedVideo;
   },
 };
 

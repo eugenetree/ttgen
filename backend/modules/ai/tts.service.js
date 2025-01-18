@@ -3,9 +3,8 @@ const fs = require("fs");
 const path = require("path");
 const { sttService } = require("./stt.service");
 
-const NEETS_API_KEY = "6a66add475f54bf39ffb180c3394dd95";
-const OPENAI_API_KEY =
-  "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";
+const NEETS_API_KEY = process.env.NEETS_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 const client = new OpenAI({
   apiKey: OPENAI_API_KEY,
@@ -54,7 +53,7 @@ function generateAndTranscribe(text) {
     const arrayBuffer = await ttsResponse.arrayBuffer();
     const tempFilePath = path.join(
       process.cwd(),
-      "storage/sounds/temp_audio.mp3",
+      "../_storage/audio/temp_audio.mp3",
     );
 
     fs.writeFileSync(tempFilePath, Buffer.from(arrayBuffer));

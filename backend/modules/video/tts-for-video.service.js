@@ -15,13 +15,16 @@ const ttsForVideoService = {
 
     for (let i = 0; i < text.length; i++) {
       const word = text[i];
-      const pathToSave = path.join(process.cwd(), `storage/sounds/${word}.mp3`);
+      const pathToSave = path.join(
+        process.cwd(),
+        `../_storage/audio/${word}.mp3`,
+      );
 
       await ttsService
         .generate(word)
         .then(async (buffer) => {
           await fs.writeFile(pathToSave, Buffer.from(buffer));
-          result.successWords.push({ en: word, pathToSave });
+          result.successWords.push({ en: word, path: pathToSave });
         })
         .catch((error) => {
           console.error(`Failed to generate audio for word: ${word}`, error);

@@ -2,16 +2,23 @@ const cron = require("node-cron");
 
 const {
   generateVideoService,
-} = require("./modules/video/generate-video.service");
+  prepareContentService,
+} = require("./modules/video/prepare-content.service");
 const { ttsService } = require("./modules/ai/tts.service");
 const {
   wordsForVideoService,
-} = require("./modules/video/words-for-video.service");
+} = require("./modules/video/word-generator.service");
+const { videoRenderService } = require("./modules/video/video-render.service");
+const { uploadService } = require("./modules/upload/upload.service");
 
 const main = async () => {
-  // generateVideoService.generate();
+  // generateVideoService.prepare();
   // ttsService.generate("carrot")
-  wordsForVideoService.generate({ englishLevel: "A1" });
+  // wordsForVideoService.generate({ englishLevel: "C2" });
+  // videoRenderService.render();
+  // prepareContentService.prepare();
+  videoRenderService.render();
+  // uploadService.upload();
 };
 
 main();

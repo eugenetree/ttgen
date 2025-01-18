@@ -1,24 +1,29 @@
 import { AbsoluteFill, Audio, Sequence, staticFile } from "remotion";
 
-import { BgVideo } from "./bg-video/bg-video";
-import { IntroScreen } from "./intro-screen";
+import { BgVideo } from "./components/bg-video/bg-video";
+import { IntroScreen } from "./components/intro-screen";
 import { useTime } from "remotion-time";
-import { WordsScreen } from "./words-screen/words-screen";
+import { WordsScreen } from "./components/words-screen/words-screen";
+import { useConfig } from "./config/use-config";
 
 export const EnglishTest = () => {
   const t = useTime();
+  const { duration } = useConfig();
 
   return (
     <Sequence>
       <BgVideo />
-      <Audio src={staticFile("bg.mp3")} volume={.2} />
+      <Audio src={staticFile("bg.mp3")} volume={0.2} />
       <AbsoluteFill style={{ background: "rgba(0,0,0,0.2)" }} />
 
-      <Sequence durationInFrames={t`5s`}>
+      <Sequence durationInFrames={t`${duration.introScreen}s`}>
         <IntroScreen />
       </Sequence>
 
-      <Sequence from={t`5s`} durationInFrames={t`36s`}>
+      <Sequence
+        from={t`${duration.introScreen}s`}
+        durationInFrames={t`${duration.wordsScreen}s`}
+      >
         <WordsScreen />
       </Sequence>
     </Sequence>
