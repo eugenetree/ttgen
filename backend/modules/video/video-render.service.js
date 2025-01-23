@@ -89,7 +89,7 @@ async function getBundleLocation() {
   );
 
   if (config.bundleLocation) {
-    return config.bundleLocation;
+    await fs.rm(config.bundleLocation, { recursive: true });
   }
 
   const bundleLocation = await bundle({

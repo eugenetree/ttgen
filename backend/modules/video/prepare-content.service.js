@@ -4,7 +4,7 @@ const { wordsForVideoService } = require("./word-generator.service");
 
 const ENGLISH_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-const prepareContentService = {  
+const prepareContentService = {
   prepare: async () => {
     if (!resourceOrchestrator.isAvailable()) {
       console.log(`Orchestrator is busy.`);
@@ -40,6 +40,7 @@ const prepareContentService = {
       words,
       englishLevel,
       status: "READY_FOR_RENDER",
+      bgVideoIndex: Math.floor(Math.random() * 3), // 0, 1, 2
     });
 
     await resourceOrchestrator.releaseLock();
