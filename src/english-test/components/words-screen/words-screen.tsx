@@ -14,7 +14,7 @@ import { useInputProps } from "../../hooks/use-input-props";
 export const WordsScreen = () => {
   const frame = useCurrentFrame();
   const t = useTime();
-  const { words } = useInputProps() as { words: { ru: string; en: string }[] };
+  const { words } = useInputProps();
 
   const wordDuration = t`7s`;
   const currentWord = (() => {

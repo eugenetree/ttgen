@@ -1,8 +1,15 @@
 const cron = require("node-cron");
 const { videoRenderService } = require("./video-render.service");
 
-videoRenderService.render();
+const isOddMinute = () => {
+  const currentMinute = new Date().getMinutes();
+  return currentMinute % 2 === 1;
+};
 
 cron.schedule("* * * * *", () => {
-  // videoRenderService.render();
+  if (isOddMinute()) {
+    return;
+  }
+
+  videoRenderService.render();
 });

@@ -1,6 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
-const { ttsService } = require("../ai/tts.service");
+const { speechSynthesizer } = require("../ai/speech-synthesizer");
 
 const ttsForVideoService = {
   generateAudio: async ({ text }) => {
@@ -20,7 +20,7 @@ const ttsForVideoService = {
         `../_storage/audio/${word}.mp3`,
       );
 
-      await ttsService
+      await speechSynthesizer
         .generate(word)
         .then(async (buffer) => {
           await fs.writeFile(pathToSave, Buffer.from(buffer));

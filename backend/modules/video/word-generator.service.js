@@ -1,4 +1,4 @@
-const { aiService } = require("../ai/ai.service");
+const { chatAgent } = require("../ai/chat-agent");
 const { ttsForVideoService } = require("./tts-for-video.service");
 const { videoRepository } = require("./video.repository");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
@@ -76,7 +76,7 @@ const wordsForVideoService = {
 };
 
 async function process({ wordsToExclude, englishLevel, requestWordsAmount }) {
-  let msg = await aiService.chat(
+  let msg = await chatAgent.chat(
     getQuery({
       wordsToExclude,
       englishLevel,

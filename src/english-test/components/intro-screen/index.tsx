@@ -10,10 +10,12 @@ import { useTime } from "remotion-time";
 import { useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useInputProps } from "../../hooks/use-input-props";
 
 export const IntroScreen = () => {
-  const frame = useCurrentFrame();
   const t = useTime();
+  const frame = useCurrentFrame();
+  const { englishLevel } = useInputProps();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -42,9 +44,9 @@ export const IntroScreen = () => {
 
   return (
     <>
-      <Audio src={staticFile("check.mp3")} volume={.8} />
+      <Audio src={staticFile("check.mp3")} volume={0.8} />
       <Sequence from={t`2.5s`}>
-        <Audio src={staticFile("lvlc2.mp3")} />
+        <Audio src={staticFile(`level_${englishLevel.toLowerCase()}.mp3`)} />
       </Sequence>
 
       <AbsoluteFill ref={containerRef}>
@@ -106,7 +108,7 @@ export const IntroScreen = () => {
               borderRadius: "20px",
             }}
           >
-            уровень С2
+            уровень {englishLevel}
           </div>
         </div>
       </AbsoluteFill>

@@ -1,15 +1,16 @@
-const cron = require("node-cron");
+// require("./modules/video/prepare-content.cron");
+// require("./modules/video/video-render.cron");
+require("./modules/upload/video-upload.cron")
 
 const {
   generateVideoService,
   prepareContentService,
 } = require("./modules/video/prepare-content.service");
-const { ttsService } = require("./modules/ai/tts.service");
 const {
   wordsForVideoService,
 } = require("./modules/video/word-generator.service");
 const { videoRenderService } = require("./modules/video/video-render.service");
-const { uploadService } = require("./modules/upload/upload.service");
+const { tiktokUploader } = require("./modules/upload/tiktok-uploader");
 
 const main = async () => {
   // generateVideoService.prepare();
@@ -17,8 +18,12 @@ const main = async () => {
   // wordsForVideoService.generate({ englishLevel: "C2" });
   // videoRenderService.render();
   // prepareContentService.prepare();
-  videoRenderService.render();
-  // uploadService.upload();
+  // videoRenderService.render();
+  // tiktokUploader.upload({ englishLevel: "C2" });
+
+  // prepareContentService.prepare();
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+  // videoRenderService.render();
 };
 
 main();

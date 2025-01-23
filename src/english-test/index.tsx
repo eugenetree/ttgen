@@ -26,6 +26,16 @@ export const EnglishTest = () => {
       >
         <WordsScreen />
       </Sequence>
+
+      <AbsoluteFill
+        style={{
+          fontSize: 300,
+          background: "lightblue",
+          wordBreak: "break-all",
+        }}
+      >
+        {"FUCK"}
+      </AbsoluteFill>
     </Sequence>
   );
 };

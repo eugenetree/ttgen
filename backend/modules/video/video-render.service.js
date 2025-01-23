@@ -3,12 +3,13 @@ const { videoRepository } = require("./video.repository");
 const { bundle } = require("@remotion/bundler");
 const { renderMedia, selectComposition } = require("@remotion/renderer");
 const fs = require("fs/promises");
-const { resourceService } = require("../_common/resource.service");
+const { resourceOrchestrator } = require("../system/resource-orchestrator");
+const { videoScreenshotService } = require("./video-screenshot.service");
 
 const videoRenderService = {
   render: async () => {
-    if (resourceService.isBusy) {
-      console.log(`Resource service is busy.`);
+    if (!resourceOrchestrator.isAvailable()) {
+      console.log(`Orchestrator is busy.`);
       return;
     }
 
@@ -23,7 +24,7 @@ const videoRenderService = {
       return;
     }
 
-    resourceService.isBusy = true;
+    await resourceOrchestrator.acquireLock();
     console.log("Start rendering video");
 
     const video = readyForRenderVideos[0];
@@ -38,7 +39,6 @@ const videoRenderService = {
       }),
     );
 
-    const entrypoint = path.resolve(process.cwd(), "../src/index.ts");
     const videoName = `${video.id}.mp4`;
     const inputProps = readyForRenderVideos[0];
     const videoOutPath = path.resolve(
@@ -47,10 +47,7 @@ const videoRenderService = {
       videoName,
     );
 
-    const bundleLocation = await bundle({
-      entryPoint: path.resolve(entrypoint),
-    });
-
+    const bundleLocation = await getBundleLocation();
     const composition = await selectComposition({
       serveUrl: bundleLocation,
       id: "english-test",
@@ -63,19 +60,48 @@ const videoRenderService = {
       codec: "h264",
       outputLocation: videoOutPath,
       onProgress: (progress) => console.log(progress),
+      // onProgress: ({ progress }) => console.log(`Progress: ${progress * 100}%`),
+      audioCodec: "mp3",
       inputProps,
     });
 
-    const updatedVideoRecord = videoRepository.update(video.id, {
+    await videoScreenshotService.screenshot({
+      videoPath: videoOutPath,
+      outputPath: path.resolve(process.cwd(), "../_storage/screenshots"),
+      filename: `${video.id}.png`,
+    });
+
+    const updatedVideoRecord = await videoRepository.update(video.id, {
       status: "READY_FOR_UPLOAD",
     });
 
-    resourceService.isBusy = false;
+    await resourceOrchestrator.releaseLock();
     console.log(
       "Video rendering completed",
       JSON.stringify(updatedVideoRecord),
     );
   },
 };
+
+async function getBundleLocation() {
+  const config = JSON.parse(
+    await fs.readFile(path.resolve(process.cwd(), "db/config.json"), "utf-8"),
+  );
+
+  if (config.bundleLocation) {
+    return config.bundleLocation;
+  }
+
+  const bundleLocation = await bundle({
+    entryPoint: path.resolve(path.resolve(process.cwd(), "../src/index.ts")),
+  });
+
+  fs.writeFile(
+    path.resolve(process.cwd(), "db/config.json"),
+    JSON.stringify({ ...config, bundleLocation }),
+  );
+
+  return bundleLocation;
+}
 
 exports.videoRenderService = videoRenderService;
