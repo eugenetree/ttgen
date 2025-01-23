@@ -72,9 +72,9 @@ export const IntroScreen = () => {
               borderRadius: "20px",
             }}
           >
-            проверь свое знание
+            Prüfe deine
             <br />
-            английского
+            Englischkenntnisse
           </div>
 
           <div
@@ -108,7 +108,7 @@ export const IntroScreen = () => {
               borderRadius: "20px",
             }}
           >
-            уровень {englishLevel}
+            niveau {englishLevel}
           </div>
         </div>
       </AbsoluteFill>
