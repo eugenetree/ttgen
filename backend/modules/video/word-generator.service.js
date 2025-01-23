@@ -41,7 +41,7 @@ const wordsForVideoService = {
       return [...acc, ...words];
     }, []);
 
-    const requestWordsAmount = 1;
+    const requestWordsAmount = 8;
     console.log(
       `Requesting ${requestWordsAmount} words for level ${englishLevel}`,
     );

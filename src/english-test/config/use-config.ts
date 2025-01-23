@@ -5,7 +5,7 @@ export const useConfig = () => {
 
   const introScreen = 5;
   const wordsScreen = 0.5 + words.length * 7 + 0.5;
-  const outroScreen = 6;
+  const outroScreen = 7.5;
   const total = introScreen + wordsScreen + outroScreen;
 
   return {

@@ -1,21 +1,17 @@
 import {
   AbsoluteFill,
   Audio,
-  Img,
-  Sequence,
   staticFile,
   useCurrentFrame,
+  useVideoConfig,
+  Video,
 } from "remotion";
-import { useTime } from "remotion-time";
-import { useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useInputProps } from "../../hooks/use-input-props";
 
 export const OutroScreen = () => {
-  const t = useTime();
   const frame = useCurrentFrame();
-  const { englishLevel } = useInputProps();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -42,77 +38,62 @@ export const OutroScreen = () => {
 
   tl.current?.time(frame / 30);
 
+  const video = useRef<HTMLVideoElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const { width, height } = useVideoConfig();
+
+  // Process a frame
+  const onVideoFrame = useCallback(
+    (opacity: number) => {
+      if (!canvas.current || !video.current) {
+        return;
+      }
+      const context = canvas.current.getContext("2d");
+
+      if (!context) {
+        return;
+      }
+
+      context.drawImage(video.current, 0, 0, width, height);
+      const imageFrame = context.getImageData(0, 0, width, height);
+      const { length } = imageFrame.data;
+
+      // If the pixel is very green, reduce the alpha channel
+      for (let i = 0; i < length; i += 4) {
+        const red = imageFrame.data[i + 0];
+        const green = imageFrame.data[i + 1];
+        const blue = imageFrame.data[i + 2];
+        // if (green > red + 50 && green > blue + 50) {
+        if (green > 100 && red < 100 && blue < 100) {
+          imageFrame.data[i + 3] = opacity * 255;
+        }
+      }
+      context.putImageData(imageFrame, 0, 0);
+    },
+    [height, width],
+  );
+
+  useEffect(() => {
+    const { current } = video;
+    if (!current || !current.requestVideoFrameCallback) {
+      return;
+    }
+    let handle = 0;
+    const callback = () => {
+      onVideoFrame(0);
+      handle = current.requestVideoFrameCallback(callback);
+    };
+
+    callback();
+
+    return () => {
+      current.cancelVideoFrameCallback(handle);
+    };
+  }, [onVideoFrame]);
+
   return (
     <>
       <Audio src={staticFile("outro.mp3")} volume={0.8} />
-      {/* <Sequence from={t`2.5s`}> */}
-      {/* <Audio src={staticFile(`level_${englishLevel.toLowerCase()}.mp3`)} /> */}
-      {/* </Sequence> */}
-
-      {/* <AbsoluteFill ref={containerRef}>
-        <div
-          ref={titleRef}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: "max-content",
-            opacity: 0,
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "Arial",
-              fontSize: 64,
-              textTransform: "uppercase",
-              textAlign: "center",
-              background: "rgba(255, 255, 255, 0.8)",
-              padding: 48,
-              borderRadius: "20px",
-            }}
-          >
-            проверь свое знание
-            <br />
-            английского
-          </div>
-
-          <div
-            ref={flagRef}
-            style={{
-              position: "absolute",
-              bottom: "calc(100% - 35px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: 100,
-              height: 100,
-            }}
-          >
-            <Img src={staticFile("usa.svg")} />
-          </div>
-          <div
-            ref={subtitleRef}
-            style={{
-              position: "absolute",
-              top: "calc(100% - 20px)",
-              left: "50%",
-              transform: "translateX(-50%)",
-              fontFamily: "Arial",
-              fontSize: 64,
-              textTransform: "uppercase",
-              textAlign: "center",
-              color: "white",
-              background: "rgba(31, 31, 31, 1)",
-              padding: 32,
-              whiteSpace: "nowrap",
-              borderRadius: "20px",
-            }}
-          >
-            уровень {englishLevel}
-          </div>
-        </div>
-      </AbsoluteFill> */}
-
       <AbsoluteFill
         style={{
           display: "flex",
@@ -120,20 +101,36 @@ export const OutroScreen = () => {
           alignItems: "center",
         }}
       >
-        <span
+        {/* <span
           style={{
             fontSize: 64,
             background: "white",
             fontFamily: "Arial",
-            textTransform: "uppercase",
-            padding: 32,
+            // textTransform: "uppercase",
             width: "80%",
-            // textAlign: "center",
+            padding: "20px 40px",
+            borderRadius: 10,
+            marginBottom: 40,
+            textAlign: "center",
           }}
         >
           делись видео с друзьями и подписывайся на канал что бы не пропускать
           новые тесты
-        </span>
+        </span> */}
+
+        <AbsoluteFill style={{ opacity: 0 }}>
+          <Video
+            ref={video}
+            src={staticFile("subscribe-outro.mp4")}
+            onError={(e) => {
+              console.error(e);
+            }}
+          />
+        </AbsoluteFill>
+
+        <AbsoluteFill>
+          <canvas ref={canvas} width={width} height={height} />
+        </AbsoluteFill>
       </AbsoluteFill>
     </>
   );
