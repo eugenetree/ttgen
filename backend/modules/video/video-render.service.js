@@ -9,7 +9,7 @@ const { videoScreenshotService } = require("./video-screenshot.service");
 const videoRenderService = {
   render: async () => {
     if (!resourceOrchestrator.isAvailable()) {
-      console.log(`Orchestrator is busy.`);
+      console.log(`orchestrator is busy.`);
       return;
     }
 
@@ -19,17 +19,17 @@ const videoRenderService = {
     );
 
     if (!readyForRenderVideos?.[0]) {
-      console.log(`No videos ready for render.`);
+      console.log(`no videos ready for render.`);
 
       return;
     }
 
     await resourceOrchestrator.acquireLock();
-    console.log("Start rendering video");
+    console.log("start rendering video");
 
     const video = readyForRenderVideos[0];
 
-    const audioPaths = video.words.map((word) => word.audioPath);
+    const audioPaths = video.words.map((word) => word.audio);
     await Promise.all(
       audioPaths.map((audioPath, index) => {
         return fs.copyFile(
@@ -40,7 +40,7 @@ const videoRenderService = {
     );
 
     const videoName = `${video.id}.mp4`;
-    const inputProps = readyForRenderVideos[0];
+    const inputProps = { ...readyForRenderVideos[0], bgVideoIndex: 2 };
     const videoOutPath = path.resolve(
       process.cwd(),
       "../_storage/rendered",
@@ -59,8 +59,7 @@ const videoRenderService = {
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation: videoOutPath,
-      onProgress: (progress) => console.log(progress),
-      // onProgress: ({ progress }) => console.log(`Progress: ${progress * 100}%`),
+      onProgress: ({ progress }) => console.log(progress),
       audioCodec: "mp3",
       inputProps,
     });
@@ -71,13 +70,13 @@ const videoRenderService = {
       filename: `${video.id}.png`,
     });
 
-    const updatedVideoRecord = await videoRepository.update(video.id, {
-      status: "READY_FOR_UPLOAD",
+    const updatedVideoRecord = await videoRepository.markAsRendered({
+      id: video.id,
     });
 
     await resourceOrchestrator.releaseLock();
     console.log(
-      "Video rendering completed",
+      "video rendering completed",
       JSON.stringify(updatedVideoRecord),
     );
   },

@@ -8,7 +8,7 @@ cron.schedule("* * * * *", async () => {
 
   const allVideos = await videoRepository.findAll();
   const readyForUploadVideos = allVideos.filter(
-    (video) => video.status === "READY_FOR_UPLOAD",
+    (video) => video.status === "RENDERED",
   );
 
   console.log(`Found ${readyForUploadVideos.length} videos ready for upload`);

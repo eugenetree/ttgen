@@ -1,30 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { z } = require("zod");
-
-/*
-type Word = {
-  sourceText: string;
-  targetText: string;
-  audio: string;
-}
-
-type Upload = {
-  platform: "tiktok" | "youtube";
-  date: Date;
-}
-
-type Video = {
-  id: number;
-  sourceLanguage: "en";
-  targetLanguage: "de" | "ru";
-  words: Word[];
-  uploads: Upload[];
-  status: "READY_FOR_RENDER" | "RENDERED";
-  createdAt: Date;
-  renderedAt: Date;
-}
-*/
+const { config } = require("../../config");
 
 const wordSchema = z.object({
   sourceText: z.string(),
@@ -40,7 +17,7 @@ const uploadSchema = z.object({
 const videoCreateSchema = z.object({
   id: z.number().optional(),
   sourceLanguage: z.literal("en"),
-  targetLanguage: z.enum(["de", "ru"]),
+  targetLanguage: z.literal(config.lang),
   englishLevel: z.enum(["a1", "a2", "b1", "b2", "c1", "c2"]),
   words: z.array(wordSchema),
   uploads: z.array(uploadSchema).optional(),
@@ -51,7 +28,7 @@ const videoCreateSchema = z.object({
 
 const readVideosJson = async () => {
   const videos = await fs.readFile(
-    path.join(process.cwd(), "db/videos.json"),
+    path.join(process.cwd(), "../_storage/videos.json"),
     "utf8",
   );
   return JSON.parse(videos);
@@ -59,7 +36,7 @@ const readVideosJson = async () => {
 
 const writeVideosJson = async (videos) => {
   await fs.writeFile(
-    path.join(process.cwd(), "db/videos.json"),
+    path.join(process.cwd(), "../_storage/videos.json"),
     JSON.stringify(videos),
   );
 };
@@ -89,19 +66,6 @@ const videoRepository = {
     await writeVideosJson(videos);
     return newVideo;
   },
-
-  // update: async (id, data) => {
-  //   const videos = await readVideosJson();
-  //   const currentVideo = videos.find((video) => video.id === id);
-
-  //   const updatedVideo = { ...currentVideo, ...data };
-  //   const updatedVideos = videos.map((video) =>
-  //     video.id === id ? updatedVideo : video,
-  //   );
-
-  //   await writeVideosJson(updatedVideos);
-  //   return updatedVideo;
-  // },
 
   addUpload: async (params) => {
     if (!params?.id) {

@@ -117,7 +117,7 @@ export const WordsScreen = () => {
               opacity: 0,
             }}
           >
-            {currentWord.ru}
+            {currentWord.targetText}
           </div>
           <div
             ref={enTextRef}
@@ -129,7 +129,7 @@ export const WordsScreen = () => {
               opacity: 0,
             }}
           >
-            {currentWord.en}
+            {currentWord.sourceText}
           </div>
         </div>
 

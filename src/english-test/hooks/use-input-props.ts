@@ -3,11 +3,14 @@ import { getInputProps } from "remotion";
 export const useInputProps = () => {
   const passedInputProps = getInputProps();
   const defaultInputProps = {
+    id: 1,
+    sourceLanguage: "en",
+    targetLanguage: "ru",
+    englishLevel: "c1",
     words: [
-      { ru: "делегация", en: "dicksucker" },
-      { ru: "автомобиль", en: "piskadriska random" },
+      { targetText: "делегация", sourceText: "dicksucker" },
+      { targetText: "автомобиль", sourceText: "piskadriska random" },
     ],
-    englishLevel: "B2",
     bgVideoIndex: 2,
   };
 

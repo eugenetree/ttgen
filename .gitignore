@@ -6,5 +6,25 @@ dist
 build
 out
 
+_storage/audio/*
+!_storage/audio/.gitkeep
+
+_storage/rendered/*
+!_storage/rendered/.gitkeep
+
+_storage/screenshots
+!_storage/screenshots/.gitkeep
+
+_storage/cookies.json
+_storage/videos.json
+
+public/check.mp3
+public/level_a1.mp3
+public/level_a2.mp3
+public/level_b1.mp3
+public/level_b2.mp3
+public/level_c1.mp3
+public/level_c2.mp3
+
 public/words/*
-!public/words/.gitkeep
+!public/words/demo/*

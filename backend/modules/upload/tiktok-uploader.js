@@ -4,7 +4,13 @@ const path = require("path");
 
 class TiktokUploader {
   async upload({ englishLevel, videoPath, previewPath }) {
-    const rawCookies = JSON.parse(await fs.readFile("cookies.json", "utf-8"));
+    const rawCookies = JSON.parse(
+      await fs.readFile(
+        path.resolve(process.cwd(), `../_storage/cookies.json`),
+        "utf-8",
+      ),
+    );
+
     const formattedCookies = rawCookies.map((cookie) => ({
       ...cookie,
       sameSite: undefined,

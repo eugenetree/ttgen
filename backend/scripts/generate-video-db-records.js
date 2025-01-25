@@ -1,23 +1,19 @@
 const path = require("path");
-
-const { videoRepository } = require("./modules/video/video.repository");
-
-const LANGUAGES_TO_GENERATE = ["ru", "de"];
+const { videoRepository } = require("../modules/video/video.repository");
+const { config } = require("../config");
 
 (async () => {
-  for (const lang of LANGUAGES_TO_GENERATE) {
-    await generateVideoDbRecords({ lang });
-  }
+  await generateVideoDbRecords();
 })();
 
-async function generateVideoDbRecords({ lang }) {
-  const ruWords = require(`./words/words_prepared_${lang}.json`);
+async function generateVideoDbRecords() {
+  const targetWords = require(`../words/words_prepared.json`);
 
   while (true) {
     const availableLevels = [];
 
-    for (const englishLevel in ruWords) {
-      if (Object.keys(ruWords[englishLevel]).length >= 8) {
+    for (const englishLevel in targetWords) {
+      if (Object.keys(targetWords[englishLevel]).length >= 8) {
         availableLevels.push(englishLevel);
       }
     }
@@ -27,17 +23,20 @@ async function generateVideoDbRecords({ lang }) {
     }
 
     const randomLevel = getRandomValues(availableLevels, 1)[0];
-    const randomWords = getRandomValues(Object.keys(ruWords[randomLevel]), 8);
+    const randomWords = getRandomValues(
+      Object.keys(targetWords[randomLevel]),
+      8,
+    );
 
     await videoRepository.create({
       sourceLanguage: "en",
-      targetLanguage: lang,
+      targetLanguage: config.lang,
       englishLevel: randomLevel,
       status: "READY_FOR_RENDER",
       createdAt: new Date(),
       words: randomWords.map((enWord) => ({
         sourceText: enWord,
-        targetText: ruWords[randomLevel][enWord],
+        targetText: targetWords[randomLevel][enWord],
         audio: path.resolve(
           process.cwd(),
           `../_storage/voiced_words/${enWord}.mp3`,
@@ -46,7 +45,7 @@ async function generateVideoDbRecords({ lang }) {
     });
 
     randomWords.forEach((enWord) => {
-      delete ruWords[randomLevel][enWord];
+      delete targetWords[randomLevel][enWord];
     });
   }
 }
