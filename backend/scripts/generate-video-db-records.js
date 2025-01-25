@@ -8,6 +8,9 @@ const config = require("../config.json");
 
 async function generateVideoDbRecords() {
   const targetWords = require(`../words/words_prepared.json`);
+  require("fs").writeFileSync(
+    path.resolve(process.cwd(), "../_storage/videos.json", "[]"),
+  );
 
   while (true) {
     const availableLevels = [];
