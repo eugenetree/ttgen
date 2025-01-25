@@ -1,6 +1,6 @@
 const path = require("path");
 const { videoRepository } = require("../modules/video/video.repository");
-const { config } = require("../config");
+const config = require("../config.json");
 
 (async () => {
   await generateVideoDbRecords();

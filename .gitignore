@@ -28,3 +28,5 @@ public/level_c2.mp3
 public/outro.mp3
 
 public/words/*
+
+backend/words/words_prepared.json
