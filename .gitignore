@@ -6,11 +6,5 @@ dist
 build
 out
 
-_storage/audio/*
-!_storage/audio/.gitkeep
-
-_storage/rendered/*
-!_storage/rendered/.gitkeep
-
 public/words/*
 !public/words/.gitkeep
