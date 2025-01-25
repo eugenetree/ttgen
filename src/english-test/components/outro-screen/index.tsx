@@ -93,7 +93,7 @@ export const OutroScreen = () => {
 
   return (
     <>
-      <Audio src={staticFile("outro.mp3")} volume={0.8} />
+      <Audio src={staticFile("outro.mp3")} volume={1} />
       <AbsoluteFill
         style={{
           display: "flex",

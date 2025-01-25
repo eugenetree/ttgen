@@ -44,9 +44,12 @@ export const IntroScreen = () => {
 
   return (
     <>
-      <Audio src={staticFile("check.mp3")} volume={0.8} />
+      <Audio src={staticFile("check.mp3")} volume={1} />
       <Sequence from={t`2.5s`}>
-        <Audio src={staticFile(`level_${englishLevel.toLowerCase()}.mp3`)} />
+        <Audio
+          src={staticFile(`level_${englishLevel.toLowerCase()}.mp3`)}
+          volume={1}
+        />
       </Sequence>
 
       <AbsoluteFill ref={containerRef}>

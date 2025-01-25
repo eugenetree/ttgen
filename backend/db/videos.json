@@ -1,1 +1,226 @@
-[{"id":1,"words":[{"en":"cat","ru":"кошка","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/cat.mp3","audioDuration":1.296},{"en":"dog","ru":"собака","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/dog.mp3","audioDuration":1.488},{"en":"apple","ru":"яблоко","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/apple.mp3","audioDuration":0.84},{"en":"table","ru":"стол","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/table.mp3","audioDuration":0.936},{"en":"chair","ru":"стул","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/chair.mp3","audioDuration":0.936},{"en":"window","ru":"окно","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/window.mp3","audioDuration":0.936},{"en":"door","ru":"дверь","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/door.mp3","audioDuration":0.936},{"en":"mother","ru":"мама","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/mother.mp3","audioDuration":0.84}],"englishLevel":"A1","status":"READY_FOR_UPLOAD","bgVideoIndex":0},{"id":2,"words":[{"en":"horse","ru":"конь","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/horse.mp3","audioDuration":0.84},{"en":"pen","ru":"ручка","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/pen.mp3","audioDuration":0.744},{"en":"milk","ru":"молоко","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/milk.mp3","audioDuration":0.936},{"en":"water","ru":"вода","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/water.mp3","audioDuration":0.936},{"en":"car","ru":"машина","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/car.mp3","audioDuration":1.032},{"en":"house","ru":"дом","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/house.mp3","audioDuration":0.936},{"en":"child","ru":"ребёнок","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/child.mp3","audioDuration":0.84},{"en":"ball","ru":"мяч","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/ball.mp3","audioDuration":1.032}],"englishLevel":"A1","status":"READY_FOR_UPLOAD","bgVideoIndex":0},{"id":3,"words":[{"en":"candy","ru":"конфета","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/candy.mp3","audioDuration":1.296},{"en":"school","ru":"школа","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/school.mp3","audioDuration":1.128},{"en":"money","ru":"деньги","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/money.mp3","audioDuration":0.936},{"en":"city","ru":"город","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/city.mp3","audioDuration":0.984},{"en":"street","ru":"улица","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/street.mp3","audioDuration":1.032},{"en":"family","ru":"семья","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/family.mp3","audioDuration":0.888},{"en":"friend","ru":"друг","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/friend.mp3","audioDuration":0.84},{"en":"tree","ru":"дерево","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/tree.mp3","audioDuration":1.296}],"englishLevel":"A2","status":"READY_FOR_UPLOAD","bgVideoIndex":0},{"id":4,"words":[{"en":"sun","ru":"солнце","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/sun.mp3","audioDuration":0.84},{"en":"river","ru":"река","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/river.mp3","audioDuration":0.792},{"en":"bird","ru":"птица","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/bird.mp3","audioDuration":1.128},{"en":"flower","ru":"цветок","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/flower.mp3","audioDuration":0.936},{"en":"music","ru":"музыка","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/music.mp3","audioDuration":0.936},{"en":"kitten","ru":"кошка","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/kitten.mp3","audioDuration":0.84},{"en":"sea","ru":"море","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/sea.mp3","audioDuration":1.032},{"en":"park","ru":"парк","audioPath":"/Users/eugene/projects/ttvidgen/gen/_storage/audio/park.mp3","audioDuration":0.84}],"englishLevel":"A2","status":"READY_FOR_RENDER","bgVideoIndex":2}]
+[
+  {
+    "id": 1,
+    "words": [
+      {
+        "en": "cat",
+        "ru": "кошка",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/cat.mp3",
+        "audioDuration": 1.296
+      },
+      {
+        "en": "dog",
+        "ru": "собака",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/dog.mp3",
+        "audioDuration": 1.488
+      },
+      {
+        "en": "apple",
+        "ru": "яблоко",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/apple.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "table",
+        "ru": "стол",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/table.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "chair",
+        "ru": "стул",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/chair.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "window",
+        "ru": "окно",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/window.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "door",
+        "ru": "дверь",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/door.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "mother",
+        "ru": "мама",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/mother.mp3",
+        "audioDuration": 0.84
+      }
+    ],
+    "englishLevel": "A1",
+    "status": "READY_FOR_UPLOAD",
+    "bgVideoIndex": 0
+  },
+  {
+    "id": 2,
+    "words": [
+      {
+        "en": "horse",
+        "ru": "конь",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/horse.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "pen",
+        "ru": "ручка",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/pen.mp3",
+        "audioDuration": 0.744
+      },
+      {
+        "en": "milk",
+        "ru": "молоко",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/milk.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "water",
+        "ru": "вода",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/water.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "car",
+        "ru": "машина",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/car.mp3",
+        "audioDuration": 1.032
+      },
+      {
+        "en": "house",
+        "ru": "дом",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/house.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "child",
+        "ru": "ребёнок",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/child.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "ball",
+        "ru": "мяч",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/ball.mp3",
+        "audioDuration": 1.032
+      }
+    ],
+    "englishLevel": "A1",
+    "status": "READY_FOR_UPLOAD",
+    "bgVideoIndex": 0
+  },
+  {
+    "id": 3,
+    "words": [
+      {
+        "en": "candy",
+        "ru": "конфета",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/candy.mp3",
+        "audioDuration": 1.296
+      },
+      {
+        "en": "school",
+        "ru": "школа",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/school.mp3",
+        "audioDuration": 1.128
+      },
+      {
+        "en": "money",
+        "ru": "деньги",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/money.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "city",
+        "ru": "город",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/city.mp3",
+        "audioDuration": 0.984
+      },
+      {
+        "en": "street",
+        "ru": "улица",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/street.mp3",
+        "audioDuration": 1.032
+      },
+      {
+        "en": "family",
+        "ru": "семья",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/family.mp3",
+        "audioDuration": 0.888
+      },
+      {
+        "en": "friend",
+        "ru": "друг",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/friend.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "tree",
+        "ru": "дерево",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/tree.mp3",
+        "audioDuration": 1.296
+      }
+    ],
+    "englishLevel": "A2",
+    "status": "READY_FOR_UPLOAD",
+    "bgVideoIndex": 0
+  },
+  {
+    "id": 4,
+    "words": [
+      {
+        "en": "sun",
+        "ru": "солнце",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/sun.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "river",
+        "ru": "река",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/river.mp3",
+        "audioDuration": 0.792
+      },
+      {
+        "en": "bird",
+        "ru": "птица",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/bird.mp3",
+        "audioDuration": 1.128
+      },
+      {
+        "en": "flower",
+        "ru": "цветок",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/flower.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "music",
+        "ru": "музыка",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/music.mp3",
+        "audioDuration": 0.936
+      },
+      {
+        "en": "kitten",
+        "ru": "кошка",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/kitten.mp3",
+        "audioDuration": 0.84
+      },
+      {
+        "en": "sea",
+        "ru": "море",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/sea.mp3",
+        "audioDuration": 1.032
+      },
+      {
+        "en": "park",
+        "ru": "парк",
+        "audioPath": "/Users/eugene/projects/ttvidgen/gen/_storage/audio/park.mp3",
+        "audioDuration": 0.84
+      }
+    ],
+    "englishLevel": "A2",
+    "status": "READY_FOR_RENDER",
+    "bgVideoIndex": 2
+  }
+]

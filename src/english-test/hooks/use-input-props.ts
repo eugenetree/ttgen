@@ -5,7 +5,7 @@ export const useInputProps = () => {
   const defaultInputProps = {
     words: [
       { ru: "делегация", en: "dicksucker" },
-      { ru: "автомобиль", en: "piskadriska" },
+      { ru: "автомобиль", en: "piskadriska random" },
     ],
     englishLevel: "B2",
     bgVideoIndex: 2,

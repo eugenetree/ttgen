@@ -75,11 +75,11 @@ export const WordsScreen = () => {
       {words.map((_, index) => (
         <>
           <Sequence from={t`${7 * index + 4}s`}>
-            <Audio src={staticFile(`words/${index}.mp3`)} />
+            <Audio src={staticFile(`words/${index}.mp3`)} volume={1} />
           </Sequence>
 
           <Sequence from={t`${7 * index + 0.5}s`} durationInFrames={t`3s`}>
-            <Audio src={staticFile(`clock.mp3`)} volume={0.5} />
+            <Audio src={staticFile(`clock.mp3`)} volume={0.3} />
           </Sequence>
         </>
       ))}
@@ -96,12 +96,12 @@ export const WordsScreen = () => {
           style={{
             position: "relative",
             width: "80%",
-            height: 200,
+            height: 225,
             textAlign: "center",
             fontSize: 100,
             fontFamily: "Arial",
             background: "white",
-            padding: "20px 40px",
+            // padding: "20px 40px",
             borderRadius: 10,
             marginBottom: 40,
             overflow: "hidden",
