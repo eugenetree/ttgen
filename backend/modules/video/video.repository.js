@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
+const { z } = require("zod");
 
 /*
 type Word = {
@@ -36,15 +37,16 @@ const uploadSchema = z.object({
   date: z.coerce.date(),
 });
 
-const videoSchema = z.object({
-  id: z.number(),
+const videoCreateSchema = z.object({
+  id: z.number().optional(),
   sourceLanguage: z.literal("en"),
   targetLanguage: z.enum(["de", "ru"]),
+  englishLevel: z.enum(["a1", "a2", "b1", "b2", "c1", "c2"]),
   words: z.array(wordSchema),
-  uploads: z.array(uploadSchema),
+  uploads: z.array(uploadSchema).optional(),
   status: z.enum(["READY_FOR_RENDER", "RENDERED"]),
   createdAt: z.coerce.date(),
-  renderedAt: z.coerce.date(),
+  renderedAt: z.coerce.date().optional(),
 });
 
 const readVideosJson = async () => {
@@ -73,12 +75,17 @@ const videoRepository = {
   },
 
   create: async (data) => {
-    videoSchema.parse(data);
-
+    videoCreateSchema.parse(data);
     const videos = await readVideosJson();
-    const newVideo = { id: videos.length + 1, ...data };
-    videos.push(newVideo);
 
+    const newVideo = {
+      id: videos.length + 1,
+      uploads: [],
+      renderedAt: null,
+      ...data,
+    };
+
+    videos.push(newVideo);
     await writeVideosJson(videos);
     return newVideo;
   },

@@ -4,7 +4,7 @@ const { videoRepository } = require("../video/video.repository");
 const path = require("path");
 
 cron.schedule("* * * * *", async () => {
-  console.log("Video upload cron started");
+  console.log("video upload cron started");
 
   const allVideos = await videoRepository.findAll();
   const readyForUploadVideos = allVideos.filter(

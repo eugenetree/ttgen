@@ -7,9 +7,9 @@ const isOddMinute = () => {
 };
 
 cron.schedule("* * * * *", () => {
-  if (isOddMinute()) {
-    return;
-  }
+  // if (isOddMinute()) {
+  // return;
+  // }
 
   videoRenderService.render();
 });
