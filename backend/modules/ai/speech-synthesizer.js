@@ -8,7 +8,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 class SpeechSynthesizer {
   async generate(text) {
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       const { inputText, outputText, audio } =
         await this.#generateAndTranscribe(text);
 
@@ -30,7 +30,8 @@ class SpeechSynthesizer {
       );
     }
 
-    throw new Error("Failed to generate audio");
+    return null;
+    // throw new Error("Failed to generate audio");
   }
 
   #generateAndTranscribe(text) {

@@ -22,7 +22,8 @@
     "react-dom": "18.3.1",
     "remotion": "4.0.235",
     "remotion-time": "^0.0.3",
-    "tiktoken": "^1.0.18"
+    "tiktoken": "^1.0.18",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@remotion/eslint-config": "4.0.235",
@@ -32,9 +33,6 @@
     "eslint": "8.56.0",
     "prettier": "3.3.3",
     "typescript": "5.5.4"
-  },
-  "overrides": {
-    "zod": "3.22.3"
   },
   "scripts": {
     "dev": "remotion studio",
