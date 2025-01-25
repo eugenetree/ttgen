@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { z } = require("zod");
-const { config } = require("../../config");
+const config = require("../../config.json");
 
 const wordSchema = z.object({
   sourceText: z.string(),

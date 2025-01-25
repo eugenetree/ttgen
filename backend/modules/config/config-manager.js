@@ -55,7 +55,7 @@ class ConfigManager {
       "level_b2",
       "level_c1",
       "level_c2",
-      "outro.mp3",
+      "outro",
     ];
 
     const remotionFilesCheck = remotionFiles.map((file) =>

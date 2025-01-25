@@ -25,6 +25,6 @@ public/level_b1.mp3
 public/level_b2.mp3
 public/level_c1.mp3
 public/level_c2.mp3
+public/outro.mp3
 
 public/words/*
-!public/words/demo/*

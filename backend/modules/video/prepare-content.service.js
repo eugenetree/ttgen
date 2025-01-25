@@ -40,7 +40,7 @@ const prepareContentService = {
       words,
       englishLevel,
       status: "READY_FOR_RENDER",
-      bgVideoIndex: Math.floor(Math.random() * 3), // 0, 1, 2
+      bgVideoIndex: Math.floor(Math.random() * 5), // 0, 1, 2, 3, 4
     });
 
     await resourceOrchestrator.releaseLock();
