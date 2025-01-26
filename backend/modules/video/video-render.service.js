@@ -65,6 +65,7 @@ const videoRenderService = {
       onProgress: (progress) => logger.info(progress),
       audioCodec: "mp3",
       inputProps,
+      concurrency: null,
     });
 
     await videoScreenshotService.screenshot({
