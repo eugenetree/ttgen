@@ -25,6 +25,11 @@ class ConfigManager {
       );
     }
 
+    console.log(
+      "debug:config:",
+      path.resolve(process.cwd(), "../_storage/cookies.json"),
+    );
+
     const videosJsonPath = path.resolve(
       process.cwd(),
       "../_storage/videos.json",
@@ -67,6 +72,13 @@ class ConfigManager {
         `something wrong with one of these files: ${remotionFiles}`,
       );
     });
+
+    const NEETS_API_KEY = process.env.NEETS_API_KEY;
+    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+    if (!NEETS_API_KEY || !OPENAI_API_KEY) {
+      throw new Error("NEETS_API_KEY and OPENAI_API_KEY should be provided");
+    }
   }
 }
 
