@@ -23,7 +23,9 @@ const videoRenderService = {
     );
 
     if (renderedVideos.length !== 0) {
-      logger.info(`no need to render a new video, already have rendered videos.`);
+      logger.info(
+        `no need to render a new video, already have rendered videos.`,
+      );
 
       return;
     }
@@ -83,6 +85,9 @@ const videoRenderService = {
       inputProps,
       concurrency: 1,
       timeoutInMilliseconds: 1000 * 60 * 5,
+      envVariables: {
+        TARGET_LANGUAGE: process.env.TARGET_LANGUAGE,
+      },
     });
 
     await videoScreenshotService.screenshot({
