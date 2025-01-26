@@ -71,6 +71,7 @@ const videoRenderService = {
       audioCodec: "mp3",
       inputProps,
       concurrency: 1,
+      timeoutInMilliseconds: 1000 * 60 * 5,
     });
 
     await videoScreenshotService.screenshot({
