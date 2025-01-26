@@ -1,6 +1,9 @@
 const { chromium } = require("patchright");
 const fs = require("fs/promises");
 const path = require("path");
+const { Logger } = require("../system/logger");
+
+const logger = new Logger("tiktok-uploader");
 
 class TiktokUploader {
   async upload({ englishLevel, videoPath, previewPath }) {
@@ -106,7 +109,11 @@ class TiktokUploader {
       await page.waitForTimeout(1000);
       await page.locator('.footer button:has-text("Post")').click();
 
-      console.log("Video uploaded");
+      await page.screenshot("tiktok-upload.png");
+      await page.waitForTimeout(10000);
+
+      await page.screenshot("tiktok-upload-final.png");
+      logger.info("video uploaded");
     } finally {
       await context.close();
       await browser.close();
