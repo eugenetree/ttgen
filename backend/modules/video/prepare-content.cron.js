@@ -13,3 +13,5 @@ cron.schedule("* * * * *", () => {
 
   prepareContentService.prepare();
 });
+
+console.log("cron is scheduled");

@@ -19,3 +19,5 @@ cron.schedule("* * * * *", () => {
 
   videoRenderService.render();
 });
+
+logger.info("cron is scheduled");
