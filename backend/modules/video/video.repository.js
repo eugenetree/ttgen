@@ -1,7 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { z } = require("zod");
-const config = require("../../config.json");
 
 const wordSchema = z.object({
   sourceText: z.string(),
@@ -17,7 +16,7 @@ const uploadSchema = z.object({
 const videoCreateSchema = z.object({
   id: z.number().optional(),
   sourceLanguage: z.literal("en"),
-  targetLanguage: z.literal(config.lang),
+  targetLanguage: z.literal(process.env.TARGET_LANGUAGE),
   englishLevel: z.enum(["a1", "a2", "b1", "b2", "c1", "c2"]),
   words: z.array(wordSchema),
   uploads: z.array(uploadSchema).optional(),

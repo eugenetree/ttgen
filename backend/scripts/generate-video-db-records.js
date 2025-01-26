@@ -1,6 +1,5 @@
 const path = require("path");
 const { videoRepository } = require("../modules/video/video.repository");
-const config = require("../config.json");
 
 (async () => {
   await generateVideoDbRecords();
@@ -34,7 +33,7 @@ async function generateVideoDbRecords() {
 
     await videoRepository.create({
       sourceLanguage: "en",
-      targetLanguage: config.lang,
+      targetLanguage: process.env.TARGET_LANGUAGE,
       englishLevel: randomLevel,
       status: "READY_FOR_RENDER",
       createdAt: new Date(),

@@ -11,15 +11,8 @@ class ConfigManager {
       );
     }
 
-    this.#config = await fs
-      .readFile(path.resolve(process.cwd(), "./config.json"))
-      .then((data) => JSON.parse(data))
-      .catch(() => {
-        throw new Error("config.json file is not found or invalid");
-      });
-
-    if (!this.#config?.lang) {
-      throw new Error("'lang' property is not specified in 'config.js'");
+    if (!process.env.TARGET_LANGUAGE) {
+      throw new Error("TARGET_LANGUAGE should be provided");
     }
 
     await fs

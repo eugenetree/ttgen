@@ -24,6 +24,11 @@ export const IntroScreen = () => {
 
   const tl = useRef<gsap.core.Timeline | null>(null);
 
+  const translations = {
+    ru: ["проверь свое знание английского", "уровень"],
+    de: ["prüfe deine", "Englischkenntnisse", "niveau"],
+  };
+
   useGSAP(() => {
     tl.current = gsap
       .timeline()
@@ -75,9 +80,9 @@ export const IntroScreen = () => {
               borderRadius: "20px",
             }}
           >
-            проверь свое знание
+            {translations[process.env.TARGET_LANGUAGE!][0]}
             <br />
-            английского
+            {translations[process.env.TARGET_LANGUAGE!][1]}
           </div>
 
           <div
@@ -111,7 +116,7 @@ export const IntroScreen = () => {
               borderRadius: "20px",
             }}
           >
-            уровень {englishLevel}
+            {translations[process.env.TARGET_LANGUAGE!][2]} {englishLevel}
           </div>
         </div>
       </AbsoluteFill>

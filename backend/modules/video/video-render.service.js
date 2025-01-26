@@ -17,6 +17,17 @@ const videoRenderService = {
     }
 
     const allVideos = await videoRepository.findAll();
+
+    const renderedVideos = allVideos.filter(
+      (video) => video.status === "RENDERED",
+    );
+
+    if (renderedVideos.length !== 0) {
+      logger.info(`no need to render a new video, already have rendered videos.`);
+
+      return;
+    }
+
     const readyForRenderVideos = allVideos.filter(
       (video) => video.status === "READY_FOR_RENDER",
     );
