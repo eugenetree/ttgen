@@ -1,5 +1,6 @@
 const cron = require("node-cron");
 const { videoRenderService } = require("./video-render.service");
+const { Logger } = require("../system/logger");
 
 const isOddMinute = () => {
   const currentMinute = new Date().getMinutes();

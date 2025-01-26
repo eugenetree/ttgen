@@ -2,6 +2,7 @@ const cron = require("node-cron");
 const { tiktokUploader } = require("./tiktok-uploader");
 const { videoRepository } = require("../video/video.repository");
 const path = require("path");
+const { Logger } = require("../system/logger");
 
 const isEvenMinute = () => {
   const currentMinute = new Date().getMinutes();
@@ -13,7 +14,7 @@ const logger = new Logger("video-upload-cron");
 cron.schedule("* * * * *", async () => {
   logger.info("cron is triggered");
 
-  if (!isOddMinute()) {
+  if (!isEvenMinute()) {
     logger.info("cron is skipped as it is not an even minute");
     return;
   }

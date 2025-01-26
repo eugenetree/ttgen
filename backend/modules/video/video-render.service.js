@@ -5,6 +5,7 @@ const { renderMedia, selectComposition } = require("@remotion/renderer");
 const fs = require("fs/promises");
 const { resourceOrchestrator } = require("../system/resource-orchestrator");
 const { videoScreenshotService } = require("./video-screenshot.service");
+const { Logger } = require("../system/logger");
 
 const logger = new Logger("video-render-service");
 
