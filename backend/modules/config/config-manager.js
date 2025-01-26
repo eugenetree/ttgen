@@ -11,42 +11,41 @@ class ConfigManager {
       );
     }
 
-    this.#config = await JSON.parse(
-      await fs.readFile(path.resolve(process.cwd(), "./config.json")),
-    );
+    this.#config = await fs
+      .readFile(path.resolve(process.cwd(), "./config.json"))
+      .then((data) => JSON.parse(data))
+      .catch(() => {
+        throw new Error("config.json file is not found or invalid");
+      });
 
     if (!this.#config?.lang) {
       throw new Error("'lang' property is not specified in 'config.js'");
     }
 
-    if (!path.resolve(process.cwd(), "../_storage/cookies.json")) {
-      throw new Error(
-        "'cookies.json' should be provided in /_storage directory",
-      );
-    }
-
-    console.log(
-      "debug:config:",
-      path.resolve(process.cwd(), "../_storage/cookies.json"),
-    );
+    await fs
+      .access(path.resolve(process.cwd(), "../_storage/cookies.json"), fs.F_OK)
+      .catch(() => {
+        throw new Error(
+          "'cookies.json' should be provided in /_storage directory",
+        );
+      });
 
     const videosJsonPath = path.resolve(
       process.cwd(),
       "../_storage/videos.json",
     );
 
-    let videos;
-    try {
-      const rawJson = await fs.readFile(videosJsonPath);
-      videos = JSON.parse(rawJson);
-    } catch {
-      throw new Error(
-        "'videos.json' should be provided in /_storage directory.\n" +
-          "it can be generated using /backend/scripts/generate-video-db-records.js",
-      );
-    }
+    const videos = await fs
+      .readFile(videosJsonPath)
+      .then((data) => JSON.parse(data))
+      .catch(() => {
+        throw new Error(
+          "'videos.json' should be provided in /_storage directory.\n" +
+            "it can be generated using /backend/scripts/generate-video-db-records.js",
+        );
+      });
 
-    if (videos[0]?.targetLanguage !== this.#config.lang) {
+    if (videos?.[0]?.targetLanguage !== this.#config.lang) {
       throw new Error(
         "videos language in 'videos.json' doesn't match with specified lang in config",
       );
@@ -64,7 +63,7 @@ class ConfigManager {
     ];
 
     const remotionFilesCheck = remotionFiles.map((file) =>
-      fs.access(path.resolve(process.cwd(), `../public/${file}.mp3`)),
+      fs.access(path.resolve(process.cwd(), `../public/${file}.mp3`), fs.F_OK),
     );
 
     await Promise.all(remotionFilesCheck).catch(() => {
