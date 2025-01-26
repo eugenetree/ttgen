@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs/promises");
 
 class ConfigManager {
-  #config = null;
 
   async init() {
     if (path.basename(process.cwd()) !== "backend") {
@@ -38,7 +37,7 @@ class ConfigManager {
         );
       });
 
-    if (videos?.[0]?.targetLanguage !== this.#config.lang) {
+    if (videos?.[0]?.targetLanguage !== process.env.TARGET_LANGUAGE) {
       throw new Error(
         "videos language in 'videos.json' doesn't match with specified lang in config",
       );
