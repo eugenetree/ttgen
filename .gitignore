@@ -6,8 +6,8 @@ dist
 build
 out
 
-_storage/audio/*
-!_storage/audio/.gitkeep
+_storage/_temp/*
+!_storage/_temp/.gitkeep
 
 _storage/rendered/*
 !_storage/rendered/.gitkeep
