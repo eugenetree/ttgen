@@ -9,12 +9,12 @@ const logger = pino({
 });
 
 class Logger {
-  constructor({ context = "" }) {
+  constructor({ context = "default-context" }) {
     this.context = context;
   }
 
   info(message) {
-    logger.info(message);
+    logger.info(`${context}: ${message}`);
   }
 }
 
