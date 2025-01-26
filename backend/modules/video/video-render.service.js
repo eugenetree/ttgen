@@ -43,7 +43,11 @@ const videoRenderService = {
     );
 
     const videoName = `${video.id}.mp4`;
-    const inputProps = { ...readyForRenderVideos[0], bgVideoIndex: 2 };
+    const inputProps = {
+      ...readyForRenderVideos[0],
+      bgVideoIndex: Math.floor(Math.random() * 5), // 0, 1, 2, 3, 4
+    };
+
     const videoOutPath = path.resolve(
       process.cwd(),
       "../_storage/rendered",
@@ -66,7 +70,7 @@ const videoRenderService = {
         logger.info(`video is rendering: ${JSON.stringify(progress)}`),
       audioCodec: "mp3",
       inputProps,
-      concurrency: null,
+      concurrency: 1,
     });
 
     await videoScreenshotService.screenshot({

@@ -101,31 +101,8 @@ export const OutroScreen = () => {
           alignItems: "center",
         }}
       >
-        {/* <span
-          style={{
-            fontSize: 64,
-            background: "white",
-            fontFamily: "Arial",
-            // textTransform: "uppercase",
-            width: "80%",
-            padding: "20px 40px",
-            borderRadius: 10,
-            marginBottom: 40,
-            textAlign: "center",
-          }}
-        >
-          делись видео с друзьями и подписывайся на канал что бы не пропускать
-          новые тесты
-        </span> */}
-
         <AbsoluteFill style={{ opacity: 0 }}>
-          <Video
-            ref={video}
-            src={staticFile("subscribe-outro.mp4")}
-            onError={(e) => {
-              console.error(e);
-            }}
-          />
+          <Video ref={video} src={staticFile("subscribe-outro.mp4")} />
         </AbsoluteFill>
 
         <AbsoluteFill>
