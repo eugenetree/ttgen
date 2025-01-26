@@ -17,6 +17,8 @@
     "node-cron": "^3.0.3",
     "openai": "^4.78.1",
     "patchright": "^1.49.2",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
     "playwright": "1.30.0",
     "react": "18.3.1",
     "react-dom": "18.3.1",

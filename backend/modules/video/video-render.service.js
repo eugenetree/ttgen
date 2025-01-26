@@ -6,10 +6,12 @@ const fs = require("fs/promises");
 const { resourceOrchestrator } = require("../system/resource-orchestrator");
 const { videoScreenshotService } = require("./video-screenshot.service");
 
+const logger = new Logger("video-render-service");
+
 const videoRenderService = {
   render: async () => {
     if (!resourceOrchestrator.isAvailable()) {
-      console.log(`orchestrator is busy.`);
+      logger.info(`orchestrator is busy.`);
       return;
     }
 
@@ -19,13 +21,13 @@ const videoRenderService = {
     );
 
     if (!readyForRenderVideos?.[0]) {
-      console.log(`no videos ready for render.`);
+      logger.info(`no videos ready for render.`);
 
       return;
     }
 
     await resourceOrchestrator.acquireLock();
-    console.log("start rendering video");
+    logger.info("start rendering video");
 
     const video = readyForRenderVideos[0];
 
@@ -59,7 +61,7 @@ const videoRenderService = {
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation: videoOutPath,
-      onProgress: ({ progress }) => console.log(progress),
+      onProgress: (progress) => logger.info(progress),
       audioCodec: "mp3",
       inputProps,
     });
@@ -75,7 +77,7 @@ const videoRenderService = {
     });
 
     await resourceOrchestrator.releaseLock();
-    console.log(
+    logger.info(
       "video rendering completed",
       JSON.stringify(updatedVideoRecord),
     );
@@ -91,7 +93,12 @@ async function getBundleLocation() {
     .catch(() => null);
 
   if (previousBundleLocation) {
-    await fs.rm(previousBundleLocation, { recursive: true });
+    await fs.rm(previousBundleLocation, { recursive: true }).catch((error) => {
+      // ENOENT = file/directory not found
+      if (error.code === "ENOENT") {
+        logger.info("previous bundle not found");
+      }
+    });
   }
 
   const newBundleLocation = await bundle({

@@ -1,14 +1,20 @@
+const pino = require("pino");
+const logger = pino({
+  transport: {
+    target: "pino-pretty",
+    options: {
+      colorize: true,
+    },
+  },
+});
+
 class Logger {
   constructor({ context = "" }) {
     this.context = context;
   }
 
   info(message) {
-    this.log(message);
-  }
-
-  #log(message) {
-    console.log(`[LOG] ${this.context} : ${message}`);
+    logger.info(message);
   }
 }
 

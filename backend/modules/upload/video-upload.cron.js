@@ -3,18 +3,30 @@ const { tiktokUploader } = require("./tiktok-uploader");
 const { videoRepository } = require("../video/video.repository");
 const path = require("path");
 
+const isEvenMinute = () => {
+  const currentMinute = new Date().getMinutes();
+  return currentMinute % 2 === 0;
+};
+
+const logger = new Logger("video-upload-cron");
+
 cron.schedule("* * * * *", async () => {
-  console.log("video upload cron started");
+  logger.info("cron is triggered");
+
+  if (!isOddMinute()) {
+    logger.info("cron is skipped as it is not an even minute");
+    return;
+  }
 
   const allVideos = await videoRepository.findAll();
   const readyForUploadVideos = allVideos.filter(
     (video) => video.status === "RENDERED",
   );
 
-  console.log(`Found ${readyForUploadVideos.length} videos ready for upload`);
+  logger.info(`found ${readyForUploadVideos.length} videos ready for upload`);
 
   if (readyForUploadVideos.length === 0) {
-    console.log("No videos to upload");
+    logger.info("no videos to upload");
     return;
   }
 
