@@ -13,8 +13,8 @@ class Logger {
     this.context = context;
   }
 
-  info(message, data) {
-    logger.info(`${this.context}: ${message}`, data);
+  info(message) {
+    logger.info(`${this.context}: ${message}`);
   }
 }
 

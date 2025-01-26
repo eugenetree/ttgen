@@ -62,7 +62,8 @@ const videoRenderService = {
       serveUrl: bundleLocation,
       codec: "h264",
       outputLocation: videoOutPath,
-      onProgress: (progress) => logger.info(`video is rendering...`, progress),
+      onProgress: (progress) =>
+        logger.info(`video is rendering: ${JSON.stringify(progress)}`),
       audioCodec: "mp3",
       inputProps,
       concurrency: null,
