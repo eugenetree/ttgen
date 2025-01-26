@@ -9,7 +9,7 @@ const logger = pino({
 });
 
 class Logger {
-  constructor({ context = "default-context" }) {
+  constructor(context = "default-context") {
     this.context = context;
   }
 
