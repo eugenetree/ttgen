@@ -53,7 +53,7 @@ class SpeechSynthesizer {
       const arrayBuffer = await ttsResponse.arrayBuffer();
       const tempFilePath = path.join(
         process.cwd(),
-        "../_storage/audio/temp_audio.mp3",
+        "../_storage/_temp/temp_audio.mp3",
       );
 
       fs.writeFileSync(tempFilePath, Buffer.from(arrayBuffer));

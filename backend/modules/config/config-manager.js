@@ -19,7 +19,7 @@ class ConfigManager {
       throw new Error("'lang' property is not specified in 'config.js'");
     }
 
-    if (!path.resolve(process.cwd(), "../storage/cookies.json")) {
+    if (!path.resolve(process.cwd(), "../_storage/cookies.json")) {
       throw new Error(
         "'cookies.json' should be provided in /_storage directory",
       );

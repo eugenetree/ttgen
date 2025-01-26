@@ -83,24 +83,27 @@ const videoRenderService = {
 };
 
 async function getBundleLocation() {
-  const config = JSON.parse(
-    await fs.readFile(path.resolve(process.cwd(), "db/config.json"), "utf-8"),
-  );
+  const previousBundleLocation = await fs
+    .readFile(
+      path.resolve(process.cwd(), "../_storage/_temp/bundleLocation"),
+      "utf-8",
+    )
+    .catch(() => null);
 
-  if (config.bundleLocation) {
-    await fs.rm(config.bundleLocation, { recursive: true });
+  if (previousBundleLocation) {
+    await fs.rm(previousBundleLocation, { recursive: true });
   }
 
-  const bundleLocation = await bundle({
+  const newBundleLocation = await bundle({
     entryPoint: path.resolve(path.resolve(process.cwd(), "../src/index.ts")),
   });
 
   fs.writeFile(
-    path.resolve(process.cwd(), "db/config.json"),
-    JSON.stringify({ ...config, bundleLocation }),
+    path.resolve(process.cwd(), "../_storage/_temp/bundleLocation"),
+    newBundleLocation,
   );
 
-  return bundleLocation;
+  return newBundleLocation;
 }
 
 exports.videoRenderService = videoRenderService;

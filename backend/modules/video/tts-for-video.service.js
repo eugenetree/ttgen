@@ -17,7 +17,7 @@ const ttsForVideoService = {
       const word = text[i];
       const pathToSave = path.join(
         process.cwd(),
-        `../_storage/audio/${word}.mp3`,
+        `../_storage/_temp/${word}.mp3`,
       );
 
       await speechSynthesizer
