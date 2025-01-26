@@ -28,5 +28,6 @@ public/level_c2.mp3
 public/outro.mp3
 
 public/words/*
+!public/words/.gitkeep
 
 backend/words/words_prepared.json
