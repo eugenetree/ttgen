@@ -23,7 +23,7 @@ class TiktokUploader {
     }));
 
     const browser = await chromium.launch({
-      headless: false,
+      headless: true,
       // proxy: {
       //   server: "http://brd.superproxy.io:33335",
       //   username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
@@ -104,9 +104,7 @@ class TiktokUploader {
       await page.locator('button:has-text("Confirm")').last().click();
 
       await page.waitForTimeout(1000);
-      // await page.locator('.footer button:has-text("Post")').click();
-
-      await page.waitForTimeout(300000);
+      await page.locator('.footer button:has-text("Post")').click();
 
       console.log("Video uploaded");
     } finally {
