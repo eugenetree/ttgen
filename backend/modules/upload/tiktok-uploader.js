@@ -84,11 +84,11 @@ class TiktokUploader {
 
     const browser = await chromium.launch({
       headless: true,
-      // proxy: {
-      // server: "http://brd.superproxy.io:33335",
-      // username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
-      // password: "far78v2e5gpi",
-      // },
+      proxy: {
+        server: "http://brd.superproxy.io:33335",
+        username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
+        password: "far78v2e5gpi",
+      },
     });
 
     const context = await browser.newContext();
@@ -103,10 +103,9 @@ class TiktokUploader {
         path: path.resolve(pathForScreenshots, `${videoId}-ip.png`),
       });
 
-      logger.info(`ipƒ: ${ip}`);
+      logger.info(`ip: ${ip}`);
       if (ip !== "91.108.197.217") {
-        console.log("wrong ip");
-        // throw new Error("wrong ip");
+        throw new Error("wrong ip");
       }
 
       await page.goto("https://www.tiktok.com/tiktokstudio/upload");
@@ -142,6 +141,8 @@ class TiktokUploader {
           .locator('.mention-list-popover [role="option"]')
           .first()
           .click();
+
+        await page.waitForTimeout(1000);
       }
 
       await page.locator(".edit-container").click();
