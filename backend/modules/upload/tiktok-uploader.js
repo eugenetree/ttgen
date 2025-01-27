@@ -114,7 +114,7 @@ class TiktokUploader {
             `${videoId}-screenshot-${i++}.png`,
           ),
         });
-      }, 5000);
+      }, 10000);
 
       await page.goto("https://ipinfo.io/ip");
       const ip = await page.textContent("pre");
@@ -125,15 +125,14 @@ class TiktokUploader {
       }
 
       await page.goto("https://www.tiktok.com/tiktokstudio/upload");
-      await page.waitForTimeout(5000);
       await page.screenshot({
         path: path.resolve(pathForScreenshots, `${videoId}-initial.png`),
       });
 
       logger.info("tiktokstudio/upload page opened");
 
-      await page.waitForSelector('input[type="file"]');
       const fileInput = page.locator('input[type="file"]');
+      await fileInput.waitFor({ state: "attached" });
       await fileInput.setInputFiles(videoPath);
 
       await page.waitForFunction(
@@ -177,14 +176,14 @@ class TiktokUploader {
       logger.info("opening preview upload container");
 
       await page.locator(".edit-container").click();
-      await page.waitForTimeout(5000);
+      await page.waitForTimeout(2000);
       await page.locator(".cover-edit-header > :nth-child(2)").click();
-      await page.waitForTimeout(5000);
+      await page.waitForTimeout(2000);
 
-      await page.waitForSelector('.upload-image-container input[type="file"]');
       const previewInput = page.locator(
         '.upload-image-container input[type="file"]',
       );
+      await previewInput.waitFor({ state: "attached" });
       await page.waitForTimeout(1000);
       await previewInput.setInputFiles(previewPath);
 
@@ -192,7 +191,7 @@ class TiktokUploader {
       await page.locator('button:has-text("Confirm")').last().click();
       logger.info("preview is uploaded");
 
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(5000);
       await page.locator('.footer button:has-text("Post")').click();
       logger.info("post button is clicked");
 
