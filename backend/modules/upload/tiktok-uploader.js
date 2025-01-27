@@ -98,7 +98,6 @@ class TiktokUploader {
     await context.addCookies(formattedCookies);
     try {
       const page = await context.newPage();
-      await page.screenshot({ path: "debug0.png" });
 
       await page.goto("https://ipinfo.io/ip");
       const ip = await page.textContent("pre");
@@ -109,6 +108,11 @@ class TiktokUploader {
       }
 
       await page.goto("https://www.tiktok.com/tiktokstudio/upload");
+      await page.waitForTimeout(5000);
+      await page.screenshot({
+        path: path.resolve(pathForScreenshots, `${videoId}-initial.png`),
+      });
+
       const fileInput = await page.locator('input[type="file"]');
       await fileInput.setInputFiles(videoPath);
 
