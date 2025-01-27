@@ -157,6 +157,21 @@ const videoRepository = {
     )[0];
   },
 
+  getOldestRenderedNotUploadedVideo: async () => {
+    const allVideos = await readVideosJson();
+    const filteredVideo = allVideos.filter(
+      (video) => video.status === "RENDERED" && !video.tiktokUploadDate,
+    );
+
+    if (filteredVideo.length === 0) {
+      return null;
+    }
+
+    return filteredVideo.sort(
+      (a, b) => new Date(a.renderedAt) - new Date(b.renderedAt),
+    )[0];
+  },
+
   getLatestUploadedToTiktokVideo: async () => {
     const allVideos = await readVideosJson();
     const latestUploadedVideo = allVideos

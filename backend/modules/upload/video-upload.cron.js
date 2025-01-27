@@ -4,9 +4,9 @@ const { videoRepository } = require("../video/video.repository");
 const path = require("path");
 const { Logger } = require("../system/logger");
 
-const isEvenMinute = () => {
+const shouldRun = () => {
   const currentMinute = new Date().getMinutes();
-  return currentMinute % 2 === 0;
+  return currentMinute % 5 !== 0;
 };
 
 const logger = new Logger("video-upload-cron");
@@ -14,8 +14,8 @@ const logger = new Logger("video-upload-cron");
 cron.schedule("* * * * *", async () => {
   logger.info("cron is triggered");
 
-  if (!isEvenMinute()) {
-    logger.info("cron is skipped as it is not an even minute");
+  if (!shouldRun()) {
+    logger.info("cron is skipped as it is not an 5/10/15/20... minute");
     return;
   }
 
@@ -29,23 +29,22 @@ cron.schedule("* * * * *", async () => {
     new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
       1000 * 60 * 60 * 6
   ) {
-    logger.info(`latest video was uploaded less than 6 hours ago`);
+    logger.info(
+      `latest video was uploaded less than 6 hours ago, no need to upload another one`,
+    );
+
     return;
   }
 
-  const allVideos = await videoRepository.findAll();
-  const readyForUploadVideos = allVideos.filter(
-    (video) => video.status === "RENDERED",
-  );
+  const videoForUpload =
+    await videoRepository.getOldestRenderedNotUploadedVideo();
 
-  if (readyForUploadVideos.length === 0) {
-    logger.info("no videos to upload");
+  if (!videoForUpload) {
+    logger.info(`no video ready for upload`);
     return;
   }
 
-  logger.info(`found ${readyForUploadVideos.length} videos ready for upload`);
-
-  const videoForUpload = readyForUploadVideos[0];
+  logger.info(`found video ${videoForUpload.id} ready for upload`);
 
   const videoPath = path.resolve(
     process.cwd(),

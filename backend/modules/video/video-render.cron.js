@@ -9,14 +9,8 @@ const isOddMinute = () => {
 
 const logger = new Logger("video-render-cron");
 
-cron.schedule("* * * * *", () => {
+cron.schedule("*/5 * * * *", () => {
   logger.info("cron is triggered");
-
-  if (!isOddMinute()) {
-    logger.info("cron is skipped as it is not an odd minute");
-    return;
-  }
-
   videoRenderService.render();
 });
 

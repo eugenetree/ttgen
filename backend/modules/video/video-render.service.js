@@ -17,31 +17,6 @@ const videoRenderService = {
     }
 
     const allVideos = await videoRepository.findAll();
-    const latestRenderedVideo = await videoRepository.getLatestRenderedVideo();
-    const latestUploadedVideo =
-      await videoRepository.getLatestUploadedToTiktokVideo();
-
-    logger.info(`latest rendered video: ${latestRenderedVideo?.id}`);
-    logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
-
-    if (
-      latestRenderedVideo &&
-      latestUploadedVideo &&
-      new Date() - new Date(latestUploadedVideo.tiktokUploadDate) >
-        1000 * 60 * 60 * 6
-    ) {
-      logger.info(
-        `latest video was uploaded more than 6 hours ago, waiting for upload first`,
-      );
-      return;
-    }
-
-    if (!latestUploadedVideo && latestRenderedVideo) {
-      logger.info(
-        `latest video is rendered but not uploaded, waiting for upload first`,
-      );
-      return;
-    }
 
     const readyForRenderVideos = allVideos.filter(
       (video) => video.status === "READY_FOR_RENDER",
