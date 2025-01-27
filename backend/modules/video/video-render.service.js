@@ -21,6 +21,9 @@ const videoRenderService = {
     const latestUploadedVideo =
       await videoRepository.getLatestUploadedToTiktokVideo();
 
+    logger.info(`latest rendered video: ${latestRenderedVideo?.id}`);
+    logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
+
     if (
       latestRenderedVideo &&
       latestUploadedVideo &&
