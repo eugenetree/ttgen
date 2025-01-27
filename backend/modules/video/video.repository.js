@@ -8,18 +8,12 @@ const wordSchema = z.object({
   audio: z.string(),
 });
 
-const uploadSchema = z.object({
-  platform: z.enum(["tiktok", "youtube"]),
-  date: z.coerce.date(),
-});
-
 const videoCreateSchema = z.object({
   id: z.number().optional(),
   sourceLanguage: z.literal("en"),
   targetLanguage: z.literal(process.env.TARGET_LANGUAGE),
   englishLevel: z.enum(["a1", "a2", "b1", "b2", "c1", "c2"]),
   words: z.array(wordSchema),
-  uploads: z.array(uploadSchema).optional(),
   status: z.enum(["READY_FOR_RENDER", "RENDERED"]),
   createdAt: z.coerce.date(),
   renderedAt: z.coerce.date().optional(),
@@ -124,6 +118,30 @@ const videoRepository = {
     return video;
   },
 
+  markAsUploadedToTiktok: async (params) => {
+    if (!params?.id) {
+      throw new Error(
+        "markAsUploadedToTiktok: video id is required",
+        JSON.stringify(params),
+      );
+    }
+
+    const videos = await readVideosJson();
+    const video = videos.find((video) => video.id === params.id);
+
+    if (!video) {
+      throw new Error(
+        "markAsUploadedToTiktok: video not found",
+        JSON.stringify(params),
+      );
+    }
+
+    video.tiktokUploadDate = new Date();
+    await writeVideosJson(videos);
+
+    return video;
+  },
+
   getLatestRenderedVideo: async () => {
     const allVideos = await readVideosJson();
     const renderedVideos = allVideos.filter(
@@ -134,22 +152,20 @@ const videoRepository = {
       return null;
     }
 
-    return renderedVideos.sort((a, b) => b.renderedAt - a.renderedAt)[0];
+    return renderedVideos.sort(
+      (a, b) => new Date(b.renderedAt) - new Date(a.renderedAt),
+    )[0];
   },
 
-  getLatestUploadedVideoForTiktok: async () => {
+  getLatestUploadedToTiktokVideo: async () => {
     const allVideos = await readVideosJson();
-    const tiktokVideos = allVideos.filter((video) =>
-      video.uploads.some((upload) => upload.platform === "tiktok"),
-    );
+    const latestUploadedVideo = allVideos
+      .filter((video) => video.tiktokUploadDate)
+      .sort(
+        (a, b) => new Date(b.tiktokUploadDate) - new Date(a.tiktokUploadDate),
+      )[0];
 
-    if (tiktokVideos.length === 0) {
-      return null;
-    }
-
-    return tiktokVideos.sort(
-      (a, b) => b.uploads[0].date - a.uploads[0].date,
-    )[0];
+    return latestUploadedVideo || null;
   },
 };
 

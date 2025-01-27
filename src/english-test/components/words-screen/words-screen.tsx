@@ -98,7 +98,7 @@ export const WordsScreen = () => {
             width: "80%",
             height: 225,
             textAlign: "center",
-            fontSize: 100,
+            fontSize: 90,
             fontFamily: "Arial",
             background: "white",
             // padding: "20px 40px",

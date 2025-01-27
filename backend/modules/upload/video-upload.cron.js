@@ -19,17 +19,30 @@ cron.schedule("* * * * *", async () => {
     return;
   }
 
+  const latestUploadedVideo =
+    await videoRepository.getLatestUploadedToTiktokVideo();
+
+  logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
+
+  if (
+    new Date() - new Date(latestUploadedVideo?.tiktokUploadDate) <
+    1000 * 60 * 60 * 6
+  ) {
+    logger.info(`latest video was uploaded less than 6 hours ago`);
+    return;
+  }
+
   const allVideos = await videoRepository.findAll();
   const readyForUploadVideos = allVideos.filter(
     (video) => video.status === "RENDERED",
   );
 
-  logger.info(`found ${readyForUploadVideos.length} videos ready for upload`);
-
   if (readyForUploadVideos.length === 0) {
     logger.info("no videos to upload");
     return;
   }
+
+  logger.info(`found ${readyForUploadVideos.length} videos ready for upload`);
 
   const videoForUpload = readyForUploadVideos[0];
 
@@ -45,9 +58,16 @@ cron.schedule("* * * * *", async () => {
     `${videoForUpload.id}.png`,
   );
 
-  tiktokUploader.upload({
+  await tiktokUploader.upload({
     englishLevel: videoForUpload.englishLevel,
     videoPath,
     previewPath,
+    videoId: videoForUpload.id,
   });
+
+  logger.info(`video uploaded to tiktok: ${videoForUpload.id}`);
+
+  await videoRepository.markAsUploadedToTiktok({ id: videoForUpload.id });
+
+  logger.info(`video marked as uploaded to tiktok: ${videoForUpload.id}`);
 });

@@ -1,12 +1,62 @@
 const { chromium } = require("patchright");
 const fs = require("fs/promises");
 const path = require("path");
+
 const { Logger } = require("../system/logger");
 
 const logger = new Logger("tiktok-uploader");
 
+const translations = {
+  de: {
+    titles: [
+      "Wie gut ist dein Englisch? Finde es heraus! 🇩🇪🇬🇧",
+      "Kannst du alle übersetzen? Beweise es! 🎯",
+      "Deutsch-Englisch Challenge: Schaffst du 100%? 🧠🔥",
+      "Teste dein Wissen: Deutsche Wörter auf Englisch! 📚✨",
+      "Wie gut kennst du diese Übersetzungen? 🤔",
+      "Englisch-Quiz für Profis – schaffst du es? 💪🌟",
+      "Kannst du alles richtig übersetzen? Probiere es aus! 🎉",
+      "Deutsch vs. Englisch: Wer gewinnt? 😎⚡",
+      "Weißt du die richtige Übersetzung? Mach mit! 🔥",
+      "Herausforderung: Übersetze alle Wörter richtig! 🏆",
+    ],
+    tags: [
+      "#lernenmittiktok",
+      "#englischlernen",
+      "#learnenglish",
+      "#englishquiz",
+      "#englischfüranfänger",
+      "#fyp",
+      "#fürdich",
+      "#viral",
+      "#germanforbeginners",
+      "#learngerman",
+      "#learnwithtiktok",
+      "#germanquiz",
+    ],
+  },
+};
+
+const getTranslations = () => {
+  const lang = process.env.TARGET_LANGUAGE;
+
+  const title =
+    translations[lang].titles[
+      Math.floor(Math.random() * translations[lang].titles.length)
+    ];
+
+  const tags = translations[lang].tags
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5);
+
+  return {
+    title,
+    tags,
+  };
+};
+
 class TiktokUploader {
-  async upload({ englishLevel, videoPath, previewPath }) {
+  async upload({ videoPath, previewPath, videoId }) {
     const rawCookies = JSON.parse(
       await fs
         .readFile(
@@ -17,7 +67,7 @@ class TiktokUploader {
     );
 
     if (rawCookies.length === 0) {
-      throw new Error("Cookies are not provided");
+      throw new Error("cookies are not provided");
     }
 
     const formattedCookies = rawCookies.map((cookie) => ({
@@ -25,12 +75,19 @@ class TiktokUploader {
       sameSite: undefined,
     }));
 
+    const pathForScreenshots = path.resolve(
+      process.cwd(),
+      "../_storage/debug-screenshots",
+    );
+
+    await fs.mkdir(pathForScreenshots, { recursive: true });
+
     const browser = await chromium.launch({
       headless: true,
       // proxy: {
-      //   server: "http://brd.superproxy.io:33335",
-      //   username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
-      //   password: "far78v2e5gpi",
+      // server: "http://brd.superproxy.io:33335",
+      // username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
+      // password: "far78v2e5gpi",
       // },
     });
 
@@ -40,23 +97,22 @@ class TiktokUploader {
     try {
       const page = await context.newPage();
 
-      // await page.goto("https://ipinfo.io/ip");
-      // const ip = await page.textContent("pre");
+      await page.goto("https://ipinfo.io/ip");
+      const ip = await page.textContent("pre");
+      await page.screenshot({
+        path: path.resolve(pathForScreenshots, `${videoId}-ip.png`),
+      });
 
-      // console.log("IP:", ip);
-      // await page.waitForTimeout(300000000);
-
-      // return;
+      logger.info(`ipƒ: ${ip}`);
+      if (ip !== "91.108.197.217") {
+        console.log("wrong ip");
+        // throw new Error("wrong ip");
+      }
 
       await page.goto("https://www.tiktok.com/tiktokstudio/upload");
 
       const fileInput = await page.locator('input[type="file"]');
       await fileInput.setInputFiles(videoPath);
-
-      // await page.locator(".info-progress.success").waitFor({
-      //   state: "attached",
-      //   timeout: 10000,
-      // });
 
       await page.waitForFunction(
         () => {
@@ -72,19 +128,15 @@ class TiktokUploader {
       await titleField.press("Backspace");
       await titleField.press("Backspace");
 
-      await titleField.pressSequentially("master your english!", {
+      const { title, tags } = getTranslations();
+
+      await titleField.pressSequentially(title, {
         delay: 100,
       });
 
       await page.keyboard.press("Enter");
 
-      for (const tag of [
-        "#english_test",
-        "#english_b1",
-        "#english_b2",
-        "#english_c1",
-        "#english_c2",
-      ]) {
+      for (const tag of tags) {
         await titleField.pressSequentially(tag, { delay: 100 });
         await page
           .locator('.mention-list-popover [role="option"]')
@@ -109,10 +161,16 @@ class TiktokUploader {
       await page.waitForTimeout(1000);
       await page.locator('.footer button:has-text("Post")').click();
 
-      await page.screenshot("tiktok-upload.png");
-      await page.waitForTimeout(10000);
+      await page.screenshot({
+        path: path.resolve(pathForScreenshots, `${videoId}-final-1.png`),
+      });
 
-      await page.screenshot("tiktok-upload-final.png");
+      await page.waitForTimeout(20000);
+
+      await page.screenshot({
+        path: path.resolve(pathForScreenshots, `${videoId}-final-2.png`),
+      });
+
       logger.info("video uploaded");
     } finally {
       await context.close();
