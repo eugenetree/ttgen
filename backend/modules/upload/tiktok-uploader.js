@@ -99,8 +99,15 @@ class TiktokUploader {
     try {
       const page = await context.newPage();
 
+      let intervalId;
       let i = 0;
-      setInterval(() => {
+
+      intervalId = setInterval(() => {
+        if (page?.isClosed() || !page) {
+          clearInterval(intervalId);
+          return;
+        }
+
         page.screenshot({
           path: path.resolve(
             pathForScreenshots,
@@ -123,7 +130,10 @@ class TiktokUploader {
         path: path.resolve(pathForScreenshots, `${videoId}-initial.png`),
       });
 
-      const fileInput = await page.locator('input[type="file"]');
+      logger.info("tiktokstudio/upload page opened");
+
+      await page.waitForSelector('input[type="file"]');
+      const fileInput = page.locator('input[type="file"]');
       await fileInput.setInputFiles(videoPath);
 
       await page.waitForFunction(
@@ -134,11 +144,15 @@ class TiktokUploader {
         { timeout: 120000 },
       );
 
-      const titleField = await page.locator(".caption-editor");
+      logger.info("video file is set to input");
+
+      const titleField = page.locator(".caption-editor");
       await titleField.click();
       await titleField.press("Backspace");
       await titleField.press("Backspace");
       await titleField.press("Backspace");
+
+      logger.info("title field is cleared");
 
       const { title, tags } = getTranslations();
 
@@ -147,33 +161,40 @@ class TiktokUploader {
       });
 
       await page.keyboard.press("Enter");
+      logger.info("start setting tags");
 
       for (const tag of tags) {
         await titleField.pressSequentially(tag, { delay: 100 });
+        await page.waitForTimeout(4000);
+
         await page
           .locator('.mention-list-popover [role="option"]')
           .first()
           .click();
-
-        await page.waitForTimeout(1000);
       }
 
-      await page.locator(".edit-container").click();
-      await page.waitForTimeout(1000);
-      await page.locator(".cover-edit-header > :nth-child(2)").click();
-      await page.waitForTimeout(1000);
+      logger.info("tags are set");
+      logger.info("opening preview upload container");
 
-      const previewInput = await page.locator(
+      await page.locator(".edit-container").click();
+      await page.waitForTimeout(5000);
+      await page.locator(".cover-edit-header > :nth-child(2)").click();
+      await page.waitForTimeout(5000);
+
+      await page.waitForSelector('.upload-image-container input[type="file"]');
+      const previewInput = page.locator(
         '.upload-image-container input[type="file"]',
       );
       await page.waitForTimeout(1000);
       await previewInput.setInputFiles(previewPath);
 
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(10000);
       await page.locator('button:has-text("Confirm")').last().click();
+      logger.info("preview is uploaded");
 
       await page.waitForTimeout(1000);
       await page.locator('.footer button:has-text("Post")').click();
+      logger.info("post button is clicked");
 
       await page.screenshot({
         path: path.resolve(pathForScreenshots, `${videoId}-final-1.png`),
@@ -186,11 +207,9 @@ class TiktokUploader {
       });
 
       logger.info("video uploaded");
-    } catch(e) {
-      logger.info(e);
+    } catch (e) {
       throw e;
-    }
-    finally {
+    } finally {
       await context.close();
       await browser.close();
     }
