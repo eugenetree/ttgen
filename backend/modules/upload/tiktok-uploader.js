@@ -186,7 +186,11 @@ class TiktokUploader {
       });
 
       logger.info("video uploaded");
-    } finally {
+    } catch(e) {
+      logger.info(e);
+      throw e;
+    }
+    finally {
       await context.close();
       await browser.close();
     }
