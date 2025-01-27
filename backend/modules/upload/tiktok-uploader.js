@@ -83,6 +83,8 @@ class TiktokUploader {
     await fs.mkdir(pathForScreenshots, { recursive: true });
 
     const browser = await chromium.launch({
+      // based on patchright version
+      executablePath: "/root/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell",
       headless: true,
       proxy: {
         server: "http://brd.superproxy.io:33335",
