@@ -96,31 +96,19 @@ class TiktokUploader {
 
     const context = await browser.newContext();
     await context.addCookies(formattedCookies);
-    console.log(1);
     try {
       const page = await context.newPage();
-      console.log(1.5);
       await page.screenshot({ path: "debug0.png" });
-      console.log(1.55);
 
       await page.goto("https://ipinfo.io/ip");
-      console.log(1.6);
       const ip = await page.textContent("pre");
-      console.log(1.7);
-      await page.screenshot({
-        path: path.resolve(pathForScreenshots, `${videoId}-ip.png`),
-      });
-      console.log(2);
+
       logger.info(`ip: ${ip}`);
       if (ip !== "91.108.197.217") {
         throw new Error("wrong ip");
       }
-      console.log(3);
-      await page.goto("https://www.tiktok.com/tiktokstudio/upload");
-      console.log(4);
 
-      await page.waitForTimeout(5000);
-      await page.screenshot({ path: "debug.png" });
+      await page.goto("https://www.tiktok.com/tiktokstudio/upload");
       const fileInput = await page.locator('input[type="file"]');
       await fileInput.setInputFiles(videoPath);
 
