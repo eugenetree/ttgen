@@ -100,7 +100,8 @@ class TiktokUploader {
     try {
       const page = await context.newPage();
       console.log(1.5);
-      await page.screenshot({path: "debug0.pngƒ"});
+      await page.screenshot({ path: "debug0.png" });
+      console.log(1.55);
 
       await page.goto("https://ipinfo.io/ip");
       console.log(1.6);
