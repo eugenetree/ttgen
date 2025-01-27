@@ -99,6 +99,16 @@ class TiktokUploader {
     try {
       const page = await context.newPage();
 
+      let i = 0;
+      setInterval(() => {
+        page.screenshot({
+          path: path.resolve(
+            pathForScreenshots,
+            `${videoId}-screenshot-${i++}.png`,
+          ),
+        });
+      }, 5000);
+
       await page.goto("https://ipinfo.io/ip");
       const ip = await page.textContent("pre");
 
