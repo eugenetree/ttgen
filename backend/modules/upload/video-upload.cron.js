@@ -25,8 +25,9 @@ cron.schedule("* * * * *", async () => {
   logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
 
   if (
-    new Date() - new Date(latestUploadedVideo?.tiktokUploadDate) <
-    1000 * 60 * 60 * 6
+    latestUploadedVideo &&
+    new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
+      1000 * 60 * 60 * 6
   ) {
     logger.info(`latest video was uploaded less than 6 hours ago`);
     return;
