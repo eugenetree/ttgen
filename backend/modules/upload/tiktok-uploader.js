@@ -84,7 +84,8 @@ class TiktokUploader {
 
     const browser = await chromium.launch({
       // based on patchright version
-      executablePath: "/root/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell",
+      executablePath:
+        "/root/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell",
       headless: true,
       proxy: {
         server: "http://brd.superproxy.io:33335",
@@ -95,7 +96,7 @@ class TiktokUploader {
 
     const context = await browser.newContext();
     await context.addCookies(formattedCookies);
-
+    console.log(1);
     try {
       const page = await context.newPage();
 
@@ -104,14 +105,17 @@ class TiktokUploader {
       await page.screenshot({
         path: path.resolve(pathForScreenshots, `${videoId}-ip.png`),
       });
-
+      console.log(2);
       logger.info(`ip: ${ip}`);
       if (ip !== "91.108.197.217") {
         throw new Error("wrong ip");
       }
-
+      console.log(3);
       await page.goto("https://www.tiktok.com/tiktokstudio/upload");
+      console.log(4);
 
+      await page.waitForTimeout(5000);
+      await page.screenshot({ path: "debug.png" });
       const fileInput = await page.locator('input[type="file"]');
       await fileInput.setInputFiles(videoPath);
 
