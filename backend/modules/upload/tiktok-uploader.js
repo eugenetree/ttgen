@@ -147,12 +147,12 @@ class TiktokUploader {
 
       for (const tag of tags) {
         await titleField.pressSequentially(tag, { delay: 100 });
-        await page.waitForTimeout(4000);
-
-        await page
-          .locator('.mention-list-popover [role="option"]')
-          .first()
-          .click();
+        const firstOption = page.locator(
+          '.mention-list-popover [role="option"]',
+        );
+        await firstOption.waitFor({ state: "visible" });
+        await firstOption.first().click();
+        logger.info(`tag ${tag} is set`);
       }
 
       logger.info("tags are set");
