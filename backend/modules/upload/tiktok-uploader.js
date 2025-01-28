@@ -28,7 +28,6 @@ const translations = {
       "#englischfüranfänger",
       "#fyp",
       "#fürdich",
-      "#viral",
       "#germanforbeginners",
       "#learngerman",
       "#learnwithtiktok",
@@ -147,12 +146,22 @@ class TiktokUploader {
 
       for (const tag of tags) {
         await titleField.pressSequentially(tag, { delay: 100 });
-        const firstOption = page.locator(
-          '.mention-list-popover [role="option"]',
-        );
-        await firstOption.waitFor({ state: "visible" });
-        await firstOption.first().click();
-        logger.info(`tag ${tag} is set`);
+        const firstOption = page
+          .locator('.mention-list-popover [role="option"]')
+          .nth(0);
+
+        await firstOption
+          .waitFor({ state: "visible", timeout: 5000 })
+          .then(async () => {
+            await firstOption.click();
+            logger.info(`tag ${tag} is set`);
+          })
+          .catch(async () => {
+            for (const _ of tag) {
+              await page.keyboard.press("Backspace");
+            }
+            logger.info(`tag ${tag} is not found`);
+          });
       }
 
       logger.info("tags are set");
