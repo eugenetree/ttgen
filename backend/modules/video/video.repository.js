@@ -11,7 +11,7 @@ const wordSchema = z.object({
 const videoCreateSchema = z.object({
   id: z.number().optional(),
   sourceLanguage: z.literal("en"),
-  targetLanguage: z.literal(process.env.TARGET_LANGUAGE),
+  targetLanguage: z.enum(["ru", "de"]),
   englishLevel: z.enum(["a1", "a2", "b1", "b2", "c1", "c2"]),
   words: z.array(wordSchema),
   status: z.enum(["READY_FOR_RENDER", "RENDERED"]),
