@@ -1,5 +1,6 @@
 const path = require("path");
 const { videoRepository } = require("../modules/video/video.repository");
+require("dotenv").config({ path: path.resolve(process.cwd(), "../.env") });
 
 (async () => {
   await generateVideoDbRecords();
