@@ -25,7 +25,7 @@ export const IntroScreen = () => {
   const tl = useRef<gsap.core.Timeline | null>(null);
 
   const translations = {
-    ru: ["проверь свое знание английского", "уровень"],
+    ru: ["проверь свое", "знание английского", "уровень"],
     de: ["prüfe deine", "Englischkenntnisse", "niveau"],
   };
 

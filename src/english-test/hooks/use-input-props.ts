@@ -8,7 +8,7 @@ export const useInputProps = () => {
     targetLanguage: "ru",
     englishLevel: "c1",
     words: [
-      { targetText: "lebensmittelgeschäft", sourceText: "car" },
+      { targetText: "some random ", sourceText: "car" },
       { targetText: "автомобиль", sourceText: "piskadriska random" },
     ],
     bgVideoIndex: 20,
