@@ -62,7 +62,7 @@ class TiktokUploader {
     const rawCookies = JSON.parse(
       await fs
         .readFile(
-          path.resolve(process.cwd(), `../_storage/cookies.json`),
+          path.resolve(process.cwd(), `../_storage/ru-cookies.json`),
           "utf-8",
         )
         .catch(() => "[]"),
@@ -80,6 +80,11 @@ class TiktokUploader {
     const browser = await chromium.launch({
       // based on patchright version
       headless: false,
+      proxy: {
+        server: "http://brd.superproxy.io:33335",
+        username: "brd-customer-hl_ebede67c-zone-isp_proxy1",
+        password: "far78v2e5gpi",
+      },
     });
 
     const context = await browser.newContext();
@@ -100,7 +105,7 @@ class TiktokUploader {
 
       await page.waitForFunction(
         () => {
-          const element = document.querySelector(".info-progress.success");
+          const element = document.querySelector(".info-progress");
           return element && element.style.width === "100%";
         },
         { timeout: 120000 },
@@ -165,8 +170,17 @@ class TiktokUploader {
       console.log("preview is uploaded");
 
       await page.waitForTimeout(5000);
-      await page.locator('.footer button:has-text("Post")').click();
-      console.log("post button is clicked");
+
+      const footerButton = page.locator('.footer button:has-text("Post")');
+      const tuxButton = page.locator('[class*="TUXButton-label"]:has-text("Post")');
+      
+      if (await footerButton.count() > 0) {
+        await footerButton.click();
+        console.log("footer post button is clicked");
+      } else {
+        await tuxButton.click();
+        console.log("tux post button is clicked");
+      }
 
       await page.waitForTimeout(20000);
 
