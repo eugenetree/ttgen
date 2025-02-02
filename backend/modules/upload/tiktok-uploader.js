@@ -210,8 +210,17 @@ class TiktokUploader {
       logger.info("preview is uploaded");
 
       await page.waitForTimeout(5000);
-      await page.locator('.footer button:has-text("Post")').click();
-      logger.info("post button is clicked");
+
+      const footerButton = page.locator('.footer button:has-text("Post")');
+      const tuxButton = page.locator('[class*="TUXButton-label"]:has-text("Post")');
+      
+      if (await footerButton.count() > 0) {
+        await footerButton.click();
+        console.log("footer post button is clicked");
+      } else {
+        await tuxButton.click();
+        console.log("tux post button is clicked");
+      }
 
       await page.screenshot({
         path: path.resolve(pathForScreenshots, `${videoId}-final-1.png`),
