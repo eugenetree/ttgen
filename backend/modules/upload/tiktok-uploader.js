@@ -145,7 +145,7 @@ class TiktokUploader {
 
       await page.waitForFunction(
         () => {
-          const element = document.querySelector(".info-progress.success");
+          const element = document.querySelector(".info-progress");
           return element && element.style.width === "100%";
         },
         { timeout: 120000 },
