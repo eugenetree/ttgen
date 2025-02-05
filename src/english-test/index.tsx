@@ -34,6 +34,31 @@ export const EnglishTest = () => {
       >
         <OutroScreen />
       </Sequence>
+
+      <AbsoluteFill>
+        <div
+          style={{
+            position: "absolute",
+            fontSize: 40,
+            color: "white",
+            fontFamily: "Arial",
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            bottom: 50,
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: 20,
+            border: "5px solid rgba(255,255,255,0.5)",
+            background: "rgba(0,0,,0.25)",
+            borderRadius: 15,
+            // background: "red",
+            opacity: .5
+          }}
+        >
+          speak.english.
+          {process.env.TARGET_LANGUAGE}
+        </div>
+      </AbsoluteFill>
     </Sequence>
   );
 };
