@@ -33,7 +33,7 @@ export const IntroScreen = () => {
     tl.current = gsap
       .timeline()
       .pause()
-      .to(titleRef.current, { scale: 1.15, duration: 0 })
+      .to(titleRef.current, { opacity: 0.5, scale: 1.15, duration: 0 })
       .to(titleRef.current, {
         opacity: 1,
         scale: 1,
