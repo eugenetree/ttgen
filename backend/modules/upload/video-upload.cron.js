@@ -12,7 +12,7 @@ const shouldRun = () => {
 
 const logger = new Logger("video-upload-cron");
 
-cron.schedule("0 18,5 * * *", async () => {
+cron.schedule("0 * * * *", async () => {
   logger.info("cron is triggered");
 
   // if (!shouldRun()) {
@@ -29,6 +29,17 @@ cron.schedule("0 18,5 * * *", async () => {
     await videoRepository.getLatestUploadedToTiktokVideo();
 
   logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
+
+  const isEdgeCase = latestUploadedVideo?.id === 13;
+  const isProperHour =
+    new Date().getHours() === 18 || new Date().getHours() === 5;
+
+  if (!isProperHour) {
+    if (!isEdgeCase) {
+      logger.info(`not a proper hour to upload a video`);
+      return;
+    }
+  }
 
   // if (
   //   latestUploadedVideo &&
