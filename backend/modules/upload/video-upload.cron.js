@@ -100,3 +100,5 @@ cron.schedule("0 * * * *", async () => {
 
   logger.info(`video marked as uploaded to tiktok: ${videoForUpload.id}`);
 });
+
+logger.info("cron is scheduled");
