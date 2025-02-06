@@ -25,21 +25,21 @@ export const EnglishTest = () => {
   const bgVideoRef = useRef(null);
   const logoRef = useRef(null);
 
-  useGSAP(() => {
-    tl.current = gsap
-      .timeline()
-      .pause()
-      .to(bgVideoRef.current, { duration: 0, scaleY: 2, scaleX: -2 })
-      .to(bgVideoRef.current, {
-        scaleY: 1,
-        scaleX: -1,
-        duration: 1,
-        ease: "power4.out",
-      })
-      .from(logoRef.current, { y: 200, duration: 1, ease: "power4.out" }, "<");
-  });
+  // useGSAP(() => {
+  //   tl.current = gsap
+  //     .timeline()
+  //     .pause()
+  //     .to(bgVideoRef.current, { duration: 0, scaleY: 2, scaleX: -2 })
+  //     .to(bgVideoRef.current, {
+  //       scaleY: 1,
+  //       scaleX: -1,
+  //       duration: 1,
+  //       ease: "power4.out",
+  //     })
+  //     .from(logoRef.current, { y: 200, duration: 1, ease: "power4.out" }, "<");
+  // });
 
-  tl.current?.time(frame / 30);
+  // tl.current?.time(frame / 30);
 
   console.log(bgVideoRef);
 
@@ -67,7 +67,7 @@ export const EnglishTest = () => {
         <OutroScreen />
       </Sequence>
 
-      <AbsoluteFill>
+      {/* <AbsoluteFill>
         <div
           ref={logoRef}
           style={{
@@ -91,7 +91,7 @@ export const EnglishTest = () => {
           speak.english.
           {process.env.TARGET_LANGUAGE}
         </div>
-      </AbsoluteFill>
+      </AbsoluteFill> */}
     </Sequence>
   );
 };

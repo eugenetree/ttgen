@@ -15,44 +15,39 @@ const logger = new Logger("video-upload-cron");
 cron.schedule("* * * * *", async () => {
   logger.info("cron is triggered");
 
-  // if (!shouldRun()) {
-  //   logger.info("cron is skipped as it is not an 5/10/15/20... minute");
-  //   return;
-  // }
-
-  // if (!resourceOrchestrator.isAvailable()) {
-  //   logger.info(`orchestrator is busy.`);
-  //   return;
-  // }
+  if (!shouldRun()) {
+    logger.info("cron is skipped as it is not an 5/10/15/20... minute");
+    return;
+  }
 
   const latestUploadedVideo =
     await videoRepository.getLatestUploadedToTiktokVideo();
 
   logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
 
-  const isEdgeCase = latestUploadedVideo?.id === 14;
-  const isProperTime =
-    (new Date().getHours() === 18 || new Date().getHours() === 5) &&
-    new Date().getMinutes() === 0;
+  // const isEdgeCase = latestUploadedVideo?.id === 14;
+  // const isProperTime =
+  //   (new Date().getHours() === 18 || new Date().getHours() === 5) &&
+  //   new Date().getMinutes() === 0;
 
-  if (!isProperTime) {
-    if (!isEdgeCase) {
-      logger.info(`not a proper hour to upload a video`);
-      return;
-    }
-  }
-
-  // if (
-  //   latestUploadedVideo &&
-  //   new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
-  //     1000 * 60 * 60 * 6
-  // ) {
-  //   logger.info(
-  //     `latest video was uploaded less than 6 hours ago, no need to upload another one`,
-  //   );
-
-  //   return;
+  // if (!isProperTime) {
+  //   if (!isEdgeCase) {
+  //     logger.info(`not a proper hour to upload a video`);
+  //     return;
+  //   }
   // }
+
+  if (
+    latestUploadedVideo &&
+    new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
+      1000 * 60 * 60 * 6
+  ) {
+    logger.info(
+      `latest video was uploaded less than 6 hours ago, no need to upload another one`,
+    );
+
+    return;
+  }
 
   const videoForUpload =
     await videoRepository.getOldestRenderedNotUploadedVideo();
