@@ -12,7 +12,7 @@ const shouldRun = () => {
 
 const logger = new Logger("video-upload-cron");
 
-cron.schedule("0 * * * *", async () => {
+cron.schedule("* * * * *", async () => {
   logger.info("cron is triggered");
 
   // if (!shouldRun()) {
@@ -31,10 +31,11 @@ cron.schedule("0 * * * *", async () => {
   logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
 
   const isEdgeCase = latestUploadedVideo?.id === 15;
-  const isProperHour =
-    new Date().getHours() === 18 || new Date().getHours() === 5;
+  const isProperTime =
+    (new Date().getHours() === 18 || new Date().getHours() === 5) &&
+    new Date().getMinutes() === 0;
 
-  if (!isProperHour) {
+  if (!isProperTime) {
     if (!isEdgeCase) {
       logger.info(`not a proper hour to upload a video`);
       return;
