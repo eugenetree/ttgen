@@ -46,7 +46,7 @@ const videoRenderService = {
     const videoName = `${video.id}.mp4`;
     const inputProps = {
       ...readyForRenderVideos[0],
-      bgVideoIndex: Math.floor(Math.random() * 23), // 0 - 22
+      bgVideoIndex: Math.floor(Math.random() * 20), // 0 - 19
     };
 
     const videoOutPath = path.resolve(

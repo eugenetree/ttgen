@@ -30,7 +30,7 @@ cron.schedule("0 * * * *", async () => {
 
   logger.info(`latest uploaded video: ${latestUploadedVideo?.id}`);
 
-  const isEdgeCase = latestUploadedVideo?.id === 13;
+  const isEdgeCase = latestUploadedVideo?.id === 15;
   const isProperHour =
     new Date().getHours() === 18 || new Date().getHours() === 5;
 

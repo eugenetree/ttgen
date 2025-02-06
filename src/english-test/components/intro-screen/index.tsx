@@ -23,6 +23,8 @@ export const IntroScreen = () => {
   const flagRef = useRef<HTMLDivElement>(null);
 
   const tl = useRef<gsap.core.Timeline | null>(null);
+  const wtl = useRef<gsap.core.Timeline | null>(null);
+  const ttl = useRef<gsap.core.Timeline | null>(null);
 
   const translations = {
     ru: ["проверь свое", "знание английского", "уровень"],
@@ -30,6 +32,41 @@ export const IntroScreen = () => {
   };
 
   useGSAP(() => {
+    wtl.current = gsap
+      .timeline({
+        repeat: -1,
+      })
+      .pause()
+      .to(flagRef.current, {
+        rotation: 5,
+        duration: 0.2,
+        ease: "power1.inOut",
+      })
+      .to(flagRef.current, {
+        rotation: -5,
+        duration: 0.4,
+        ease: "power1.inOut",
+      })
+      .to(flagRef.current, {
+        rotation: 0,
+        duration: 0.2,
+        ease: "power1.inOut",
+      });
+
+    ttl.current = gsap
+      .timeline()
+      .pause()
+      .to(subtitleRef.current, {
+        y: -10,
+        duration: 0.5,
+        stagger: {
+          each: 0.1,
+          repeat: -1,
+          yoyo: true,
+        },
+        ease: "sine.inOut",
+      });
+
     tl.current = gsap
       .timeline()
       .pause()
@@ -40,12 +77,15 @@ export const IntroScreen = () => {
         duration: 1,
         ease: "power4.out",
       })
-      .from(subtitleRef.current, { opacity: 0, y: -20, delay: 1.5 })
-      .from(flagRef.current, { opacity: 0, y: 20 }, "<")
-      .to(containerRef.current, { opacity: 0, duration: 1, delay: 1 });
+      // .from(subtitleRef.current, { opacity: 0, y: -20, delay: 1.5 })
+      // .from(flagRef.current, { opacity: 0, y: 20 }, "<")
+      .to(containerRef.current, { opacity: 0, duration: 1, delay: 2.5 });
+    // .to(containerRef.current, { opacity: 0, duration: 1, delay: 1 });
   });
 
   tl.current?.time(frame / 30);
+  wtl.current?.time(frame / 30);
+  ttl.current?.time(frame / 30);
 
   return (
     <>
