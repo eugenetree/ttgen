@@ -11,7 +11,9 @@ export const useInputProps = () => {
       { targetText: "some random", sourceText: "car" },
       { targetText: "автомобиль", sourceText: "piskadriska random" },
     ],
-    bgVideoIndex: 12,
+    bgVideoIndex: 100,
+    renderedAt: "2025-02-01T09:57:53.603Z",
+    randomValue: 200,
   };
 
   const inputProps =

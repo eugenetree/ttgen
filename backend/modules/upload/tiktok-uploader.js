@@ -109,9 +109,9 @@ class TiktokUploader {
 
     const browser = await chromium.launch({
       // based on patchright version
-      executablePath:
-        "/root/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell",
-      headless: true,
+      // executablePath:
+        // "/root/.cache/ms-playwright/chromium_headless_shell-1148/chrome-linux/headless_shell",
+      headless: false,
       proxy: {
         server: "http://brd.superproxy.io:33335",
         username: "brd-customer-hl_ebede67c-zone-isp_proxy1",

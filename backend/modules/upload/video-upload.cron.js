@@ -12,13 +12,13 @@ const shouldRun = () => {
 
 const logger = new Logger("video-upload-cron");
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("42 * * * *", async () => {
   logger.info("cron is triggered");
 
-  if (!shouldRun()) {
-    logger.info("cron is skipped as it is not an 5/10/15/20... minute");
-    return;
-  }
+  // if (!shouldRun()) {
+  //   logger.info("cron is skipped as it is not an 5/10/15/20... minute");
+  //   return;
+  // }
 
   const latestUploadedVideo =
     await videoRepository.getLatestUploadedToTiktokVideo();
@@ -37,17 +37,17 @@ cron.schedule("* * * * *", async () => {
   //   }
   // }
 
-  if (
-    latestUploadedVideo &&
-    new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
-      1000 * 60 * 60 * 6
-  ) {
-    logger.info(
-      `latest video was uploaded less than 6 hours ago, no need to upload another one`,
-    );
+  // if (
+  //   latestUploadedVideo &&
+  //   new Date() - new Date(latestUploadedVideo.tiktokUploadDate) <
+  //     1000 * 60 * 60 * 6
+  // ) {
+  //   logger.info(
+  //     `latest video was uploaded less than 6 hours ago, no need to upload another one`,
+  //   );
 
-    return;
-  }
+  //   return;
+  // }
 
   const videoForUpload =
     await videoRepository.getOldestRenderedNotUploadedVideo();

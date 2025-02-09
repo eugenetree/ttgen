@@ -29,7 +29,7 @@ const videoRenderService = {
     }
 
     await resourceOrchestrator.acquireLock();
-    logger.info("start rendering video");
+    logger.info(`start rendering video ${readyForRenderVideos[0].id}`);
 
     const video = readyForRenderVideos[0];
 
@@ -46,7 +46,9 @@ const videoRenderService = {
     const videoName = `${video.id}.mp4`;
     const inputProps = {
       ...readyForRenderVideos[0],
-      bgVideoIndex: Math.floor(Math.random() * 19), // 0 - 18
+      randomValue: new Date().getTime(),
+      bgVideoIndex: 0, // 0 - 18,
+      // bgVideoIndex: Math.floor(Math.random() * 19), // 0 - 18
     };
 
     const videoOutPath = path.resolve(
