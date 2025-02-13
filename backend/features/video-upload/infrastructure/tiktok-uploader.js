@@ -113,7 +113,7 @@ class TiktokUploader {
       await fs.mkdir(pathForScreenshots, { recursive: true });
 
       const browser = await chromium.launch({
-        headless: false,
+        headless: true,
         proxy: {
           server: configService.get("proxyServer"),
           username: configService.get("proxyUsername"),

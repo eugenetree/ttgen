@@ -9,7 +9,7 @@
   },
   "video": {
     "renderInterval": "0 * * * *",
-    "uploadInterval": "*/10 * * * *",
+    "uploadInterval": "1,10,20,30,40,50 * * * *",
     "minUploadGapInHours": 6,
     "outputPath": "_storage/rendered",
     "screenshotsPath": "_storage/screenshots",
