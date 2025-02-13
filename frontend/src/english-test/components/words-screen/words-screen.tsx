@@ -1,9 +1,11 @@
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AbsoluteFill,
   Audio,
+  continueRender,
+  delayRender,
   Sequence,
   staticFile,
   useCurrentFrame,
@@ -12,6 +14,14 @@ import { useTime } from "remotion-time";
 import { useInputProps } from "../../hooks/use-input-props";
 
 export const WordsScreen = () => {
+  const [handle] = useState(() => delayRender());
+
+  useEffect(() => {
+    new Promise((resolve) => setTimeout(resolve, 100)).then(() => {
+      continueRender(handle);
+    });
+  }, [handle]);
+
   const frame = useCurrentFrame();
   const t = useTime();
   const { words } = useInputProps();
