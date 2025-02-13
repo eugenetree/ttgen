@@ -40,8 +40,8 @@
     "zod": "3.24.1"
   },
   "scripts": {
-    "dev": "remotion studio",
-    "build": "remotion bundle",
+    "dev": "remotion studio --public-dir=frontend/public frontend/src/index.ts",
+    "build": "remotion bundle --public-dir=frontend/public frontend/src/index.ts",
     "upgrade": "remotion upgrade",
     "lint": "eslint src --ext ts,tsx,js,jsx && tsc",
     "postinstall": "npx patchright install chromium"

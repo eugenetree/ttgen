@@ -46,8 +46,6 @@ export const EnglishTest = () => {
 
   tl.current?.time(frame / 30);
 
-  console.log(bgVideoRef);
-
   return (
     <Sequence>
       {/* <BgVideo videoRef={bgVideoRef} /> */}

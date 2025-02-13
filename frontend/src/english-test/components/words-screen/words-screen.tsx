@@ -64,11 +64,10 @@ export const WordsScreen = () => {
         .to(countdownInnerRef.current, { opacity: 0, duration: 0.5 }, "<");
     });
 
-    tl.current!.to(containerRef.current, { opacity: 0 });
+    tl.current!.to(containerRef.current, { opacity: 0 }).pause();
   });
 
   tl.current?.time(frame / 30);
-  tl.current?.pause();
 
   return (
     <>
