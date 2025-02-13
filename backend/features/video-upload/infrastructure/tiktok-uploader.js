@@ -115,9 +115,9 @@ class TiktokUploader {
       const browser = await chromium.launch({
         headless: false,
         proxy: {
-          server: configService.get("proxy.server"),
-          username: configService.get("proxy.username"),
-          password: configService.get("proxy.password"),
+          server: configService.get("proxyServer"),
+          username: configService.get("proxyUsername"),
+          password: configService.get("proxyPassword"),
         },
       });
 

@@ -20,8 +20,8 @@ class VideoGenerationJob {
       `Video generation job initialized with schedule: ${cronSchedule}`,
     );
 
-    this.logger.info("Running video generation job immediately");
-    this.runUseCase();
+    // this.logger.info("Running video generation job immediately");
+    // this.runUseCase();
   }
 
   async runUseCase() {
