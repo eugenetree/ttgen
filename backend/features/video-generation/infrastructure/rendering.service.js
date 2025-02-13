@@ -52,7 +52,7 @@ class RenderingService {
           const nextProgressPercentage = Math.floor(progress * 100);
           if (nextProgressPercentage !== prevProgressPercentage) {
             this.logger.info(
-              `Video rendering progress: ${JSON.stringify(progress)}`,
+              `Video rendering progress: ${nextProgressPercentage}%`,
             );
             prevProgressPercentage = nextProgressPercentage;
           }
