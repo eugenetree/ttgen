@@ -14,14 +14,6 @@ import { useTime } from "remotion-time";
 import { useInputProps } from "../../hooks/use-input-props";
 
 export const WordsScreen = () => {
-  const [handle] = useState(() => delayRender());
-
-  useEffect(() => {
-    new Promise((resolve) => setTimeout(resolve, 100)).then(() => {
-      continueRender(handle);
-    });
-  }, [handle]);
-
   const frame = useCurrentFrame();
   const t = useTime();
   const { words } = useInputProps();
@@ -54,27 +46,28 @@ export const WordsScreen = () => {
       .pause()
       .fromTo(containerRef.current, { opacity: 0 }, { opacity: 1 });
 
+    // prettier-ignore
     words.forEach(() => {
       tl.current!.to(countdownInnerRef.current, {
         opacity: 1,
         width: 0,
         duration: 0,
       }) // reset
-        .to(ruTextRef.current, { opacity: 0, y: 120, duration: 0 }) // reset
-        .to(enTextRef.current, { opacity: 0, y: 120, duration: 0 }) // reset
+        .to(ruTextRef.current, { opacity: 0, xPercent: -50, yPercent: -50, y: 120,  duration: 0, }) // reset
+        .to(enTextRef.current, { opacity: 0, xPercent: -50, yPercent: -50, y: 120, duration: 0 }) // reset
         .to(countdownInnerRef.current, {
           width: "100%",
           duration: 3,
           ease: "linear",
         })
-        .to(ruTextRef.current, { opacity: 1, y: 0, duration: 0.5 }, "<")
-        .to(ruTextRef.current, { opacity: 0, y: -120, duration: 0.5 })
-        .to(enTextRef.current, { opacity: 1, y: 0, duration: 0.5 }, "<")
-        .to(enTextRef.current, { opacity: 0, delay: 3 })
+        .to(ruTextRef.current, { opacity: 1, xPercent: -50, yPercent: -50, y: 0,duration: 0.5 }, "<")
+        .to(ruTextRef.current, { opacity: 0, xPercent: -50, yPercent: -50, y: -120, duration: 0.5 })
+        .to(enTextRef.current, { opacity: 1, xPercent: -50, yPercent: -50, y: 0, duration: 0.5 }, "<")
+        .to(enTextRef.current, { opacity: 0, xPercent: -50, yPercent: -50, delay: 3 })
         .to(countdownInnerRef.current, { opacity: 0, duration: 0.5 }, "<");
     });
 
-    tl.current!.to(containerRef.current, { opacity: 0 }).pause();
+    tl.current!.to(containerRef.current, { opacity: 0 });
   });
 
   tl.current?.time(frame / 30);
@@ -122,7 +115,7 @@ export const WordsScreen = () => {
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: "translate(-50%, -50%)",
+              // transform: "translate(-50%, -50%)",
               opacity: 0,
             }}
           >
@@ -134,7 +127,7 @@ export const WordsScreen = () => {
               position: "absolute",
               top: "50%",
               left: "50%",
-              transform: "translate(-50%, -50%)",
+              // transform: "translate(-50%, -50%)",
               opacity: 0,
             }}
           >
