@@ -8,8 +8,8 @@
     "filename": "videos.json"
   },
   "video": {
-    "renderInterval": "* * * * *",
-    "uploadInterval": "*/30 * * * *",
+    "renderInterval": "0 * * * *",
+    "uploadInterval": "*/10 * * * *",
     "minUploadGapInHours": 6,
     "outputPath": "_storage/rendered",
     "screenshotsPath": "_storage/screenshots",

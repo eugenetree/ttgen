@@ -20,8 +20,8 @@ class VideoUploadJob {
       `Video upload job initialized with schedule: ${cronSchedule}`,
     );
 
-    this.logger.info("Running video upload job immediately");
-    this.runUseCase();
+    // this.logger.info("Running video upload job immediately");
+    // this.runUseCase();
   }
 
   async runUseCase() {
