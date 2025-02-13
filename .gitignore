@@ -15,6 +15,9 @@ _storage/rendered/*
 _storage/screenshots
 !_storage/screenshots/.gitkeep
 
+_storage/debug-screenshots
+!_storage/debug-screenshots/.gitkeep
+
 _storage/cookies.json
 _storage/videos.json
 

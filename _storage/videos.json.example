@@ -1,1 +1,48 @@
-[]
+[
+  {
+    "id": 1,
+    "words": [
+      {
+        "text": "example",
+        "translation": "пример",
+        "audio": "/tmp/audio/1_1.mp3"
+      },
+      {
+        "text": "test",
+        "translation": "тест",
+        "audio": "/tmp/audio/1_2.mp3"
+      }
+    ],
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "englishLevel": "B1",
+    "status": "RENDERED",
+    "renderedAt": "2024-02-10T12:00:00.000Z",
+    "uploadedAt": "2024-02-10T13:00:00.000Z",
+    "uploads": [
+      {
+        "platform": "tiktok",
+        "date": "2024-02-10T13:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "words": [
+      {
+        "text": "hello",
+        "translation": "привет",
+        "audio": "/tmp/audio/2_1.mp3"
+      },
+      {
+        "text": "world",
+        "translation": "мир",
+        "audio": "/tmp/audio/2_2.mp3"
+      }
+    ],
+    "sourceLanguage": "en",
+    "targetLanguage": "ru",
+    "englishLevel": "A2",
+    "status": "READY_FOR_RENDER"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "app": {
+    "name": "Video Generator",
+    "version": "1.0.0"
+  },
+  "database": {
+    "storagePath": "_storage",
+    "filename": "videos.json"
+  },
+  "video": {
+    "renderInterval": "* * * * *",
+    "uploadInterval": "*/30 * * * *",
+    "minUploadGapInHours": 6,
+    "outputPath": "_storage/rendered",
+    "screenshotsPath": "_storage/screenshots",
+    "tempPath": "_storage/_temp"
+  },
+  "tiktok": {
+    "uploadHours": [6, 18]
+  }
+} 

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "sessionid",
+    "value": "abcd1234efgh5678ijkl9012",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "tt_csrf_token",
+    "value": "abcd1234-efgh-5678-ijkl-9012mnop3456",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "sid_tt",
+    "value": "abcd1234efgh5678ijkl9012mnop3456qrst7890",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "sid_ucp_v1",
+    "value": "1.0.0-KAbcd1234efgh5678ijkl9012mnop3456qrst7890uvwx1234yzab5678cdef9012ghij3456",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "passport_csrf_token",
+    "value": "abcd1234efgh5678ijkl9012mnop3456",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "passport_csrf_token_default",
+    "value": "abcd1234efgh5678ijkl9012mnop3456",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "store-idc",
+    "value": "useast2a",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "store-country-code",
+    "value": "us",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "store-country-code-src",
+    "value": "uid",
+    "domain": ".tiktok.com",
+    "path": "/"
+  },
+  {
+    "name": "tt-target-idc",
+    "value": "useast2a",
+    "domain": ".tiktok.com",
+    "path": "/"
+  }
+] 
